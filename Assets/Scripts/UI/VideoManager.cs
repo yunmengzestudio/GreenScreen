@@ -14,13 +14,11 @@ public class VideoManager : MonoBehaviour
     private VideoPlayer video;
     private CanvasGroup canvasGroup;
     private RawImage rawImage;
-
-    public Image MaskImage;
-    public GameObject FailLoadTip;
-    public bool HideOnAwake = true;
-
-    [Header("Status")]
+    [HideInInspector]
     public bool OnShow = true;
+
+    public bool HideOnAwake = true;
+    public string ResourcePath = "Videos/";
 
     [Header("Icon Conf")]
     public GameObject PlayIcon;
@@ -29,6 +27,10 @@ public class VideoManager : MonoBehaviour
     public Color IconColor = Color.white;
     private float MaxIconScale = 2f;
 
+    [Header("Reference")]
+    public Image MaskImage;
+    public GameObject FailLoadTip;
+    public SelectPanel SelectPanel;
 
     private void Start() {
         video = GetComponent<VideoPlayer>();
@@ -36,6 +38,9 @@ public class VideoManager : MonoBehaviour
         rawImage = GetComponent<RawImage>();
         FailLoadTip.SetActive(false);
 
+        if (SelectPanel) {
+            SelectPanel.SelectEvent += PlayHandle;
+        }
         if (HideOnAwake)
             Hide();
     }
@@ -53,15 +58,12 @@ public class VideoManager : MonoBehaviour
     public void Play(string name) {
         // 已经显示 Video
         if (canvasGroup.alpha > 0 && video.clip && video.clip.name == name) {
-            if (video.isPlaying)
-                video.Pause();
-            else
-                video.Play();
+            Click();
             return;
         }
 
         Show();
-        StartCoroutine(AsyncPlay("Videos/" + name));
+        StartCoroutine(AsyncPlay(ResourcePath + name));
     }
 
     private IEnumerator AsyncPlay(string path) {
@@ -118,7 +120,11 @@ public class VideoManager : MonoBehaviour
         _iconImage.color = IconColor;
         _iconImage.DOFade(0, AnimDuration);
     }
-    
+
+
+    private void PlayHandle(object sender, string name) {
+        Play(name);
+    }
 
     private void ShowMask() {
         MaskImage.color = Color.black;

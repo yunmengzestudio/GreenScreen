@@ -11,6 +11,7 @@ public class SelectPanel : MonoBehaviour
 {
     private List<string> imageNames = new List<string>();
     private Dictionary<string, Image> images = new Dictionary<string, Image>();
+    public event EventHandler<string> SelectEvent;
 
     public GameObject ImagePrefab;
     public Transform ImageRoot;
@@ -73,7 +74,9 @@ public class SelectPanel : MonoBehaviour
         var clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         string selectName = clickedButton.name;
         Debug.Log("[SelectPanel] 选择 Image：" + selectName);
+
         // ..Play(selectName);
+        SelectEvent(this, selectName);
     }
 
 }
