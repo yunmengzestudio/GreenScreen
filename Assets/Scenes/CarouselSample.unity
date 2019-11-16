@@ -895,6 +895,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4172146870308969934, guid: e349ab40807ac0441b48ba02a94d5d87,
+        type: 3}
+      propertyPath: ResourcePath
+      value: Background/Videos/
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e349ab40807ac0441b48ba02a94d5d87, type: 3}
 --- !u!224 &1297501484 stripped

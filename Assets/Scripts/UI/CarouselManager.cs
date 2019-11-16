@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.IO;
+using System.Linq;
 
 public class CarouselManager : MonoBehaviour
 {
@@ -24,7 +26,11 @@ public class CarouselManager : MonoBehaviour
     public Vector2 RightFigPos = new Vector2(200, 0);
     public float BehindScale = 0.9f;
     public float AnimDuration = 0.35f;
-    
+
+    [Header("Resource Config")]
+    public string ResourcePath = "Background/Thumbnails/";
+    public string ImageSuffix = ".png";
+
 
     private void Start() {
         videoManager = GetComponentInChildren<VideoManager>();
@@ -33,6 +39,7 @@ public class CarouselManager : MonoBehaviour
         if (images.Count > 0) {
             transform.Find("NoImageTip").gameObject.SetActive(false);
         }
+        ResourcePath = ResourcePath + (ResourcePath.EndsWith("/") ? "" : "/");
     }
 
     private void Update() {
@@ -62,14 +69,12 @@ public class CarouselManager : MonoBehaviour
     // 初始化加载图片 | Sprite 路径：Resources/Thumbnails/...
     private void LoadImages() {
         Transform imagesParent = transform.Find("Images");
-
-        List<string> imageNames;        // => 获取缩略图 Names (即视频标志符)
-        imageNames = new List<string>() { "Demo/demo1", "Demo/demo2", "Demo/demo3" }; // TEST
+        List<string> imageNames = LoadImageNames();
 
         foreach (string imageName in imageNames) {
             GameObject go = Instantiate(CarouselImagePrefab, imagesParent);
             go.transform.localPosition = Vector3.zero;
-            go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Thumbnails/" + imageName);
+            go.GetComponent<Image>().sprite = Resources.Load<Sprite>(ResourcePath + imageName);
             images.Add(go.GetComponent<RectTransform>());
         }
     }
@@ -141,6 +146,27 @@ public class CarouselManager : MonoBehaviour
         images[Index(0)].GetComponent<Image>().DOColor(Color.white, duration);
 
         images[Index(0)].SetAsLastSibling();
+    }
+
+
+    // 加载 ResourcePath 下的缩略图 name
+    private List<string> LoadImageNames() {
+        List<string> newNames = new List<string>();
+        string fullPath = "Assets/Resources/" + ResourcePath;
+
+        // 生成 newNames:List 当前文件夹下所有 FileSuffix 后缀的文件名
+        if (Directory.Exists(fullPath)) {
+            DirectoryInfo direction = new DirectoryInfo(fullPath);
+            FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
+
+            char[] suffixArr = ImageSuffix.ToArray();
+            for (int i = 0; i < files.Length; i++) {
+                if (files[i].Name.EndsWith(ImageSuffix))
+                    newNames.Add(files[i].Name.TrimEnd(suffixArr));
+            }
+        }
+
+        return newNames;
     }
 
     private int Index(int offset = 0) {
