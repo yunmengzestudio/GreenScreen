@@ -19,7 +19,7 @@ public class SelectPanel : MonoBehaviour
     [Header("Conf")]
     public string ResourcePath = "Background/Thumbnails/";
     public string ImageSuffix = ".png";
-    public string selectName;
+
 
     private void Start() {
         UpdateAll();
@@ -52,7 +52,7 @@ public class SelectPanel : MonoBehaviour
         IEnumerable<string> newList = newNames.Except(imageNames);
         foreach (string name in newList) {
             GameObject go = Instantiate(ImagePrefab, ImageRoot);
-            go.GetComponent<Button>().onClick.AddListener(Click);
+            go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
             go.name = name;
 
             Sprite sprite = Resources.Load<Sprite>(ResourcePath + name);
@@ -70,14 +70,14 @@ public class SelectPanel : MonoBehaviour
     }
 
 
-    private void Click() {
-        var clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        selectName = clickedButton.name;
-        Debug.Log("[SelectPanel] 选择 Image：" + selectName);
-
-        // ..Play(selectName);
-     
-        SelectEvent.Invoke(this, selectName);
+    private void Click(string name = "") {
+        if (name == "") {
+            var clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            name = clickedButton.name;
+        }
+        if (SelectEvent != null) {
+            SelectEvent.Invoke(this, name);
+        }
     }
 
 }
