@@ -19,7 +19,7 @@ public class SelectPanel : MonoBehaviour
     [Header("Conf")]
     public string ResourcePath = "Background/Thumbnails/";
     public string ImageSuffix = ".png";
-
+    public string selectName;
 
     private void Start() {
         UpdateAll();
@@ -72,11 +72,12 @@ public class SelectPanel : MonoBehaviour
 
     private void Click() {
         var clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        string selectName = clickedButton.name;
+        selectName = clickedButton.name;
         Debug.Log("[SelectPanel] 选择 Image：" + selectName);
 
         // ..Play(selectName);
-        SelectEvent(this, selectName);
+     
+        SelectEvent.Invoke(this, selectName);
     }
 
 }
