@@ -36,19 +36,21 @@ public class VideoResourceAPI : MonoBehaviour
         if (DialogShow.GetOpenFileName(dialog))
         {
             string destPath = Application.dataPath + "/Resources/" + outDir + "/Videos/" + prefix + "_" + dialog.fileTitle;
-            Debug.Log(destPath);
             File.Copy(dialog.file, destPath, true);
+            Debug.Log("复制成功：" + destPath);
+            
+            GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
+                destPath,
+                Application.dataPath + "/Resources/" + outDir + "/Thumbnails/"
+                );
         }
-
-        /// 生成缩略图
-        /// ...
     }
 
 
     // path: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
     public static void Delete(string path, string name) {
         Debug.Log(Application.dataPath);
-        string destVideoPath = Application.dataPath + "Resource/" + path + "/Videos/" + name + ".mp4";
+        string destVideoPath = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4";
         string destVideoPath1 = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4.meta";
         string destPngPath = Application.dataPath + "/Resources/" + path + "/Thumbnails/" + name + ".png";
         string destPngPath1 = Application.dataPath + "/Resources/" + path + "/Thumbnails/" + name + ".png.meta";

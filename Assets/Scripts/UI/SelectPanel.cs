@@ -43,32 +43,38 @@ public class SelectPanel : MonoBehaviour
 
         // 删除：原List有 新List没有，需要删除
         IEnumerable<string> deleteList = imageNames.Except(newNames);
-        foreach (string name in deleteList) {
-            Destroy(images[name].gameObject);
-        }
-
-
         // 添加：新List有 原List没有，需要添加
         IEnumerable<string> newList = newNames.Except(imageNames);
+        // imageNames 列表更新，需及时更新，否则重复点击刷新可能会造成重复添加
+        imageNames = newNames;
+
+        // 添加的处理
         foreach (string name in newList) {
-            GameObject go = Instantiate(ImagePrefab, ImageRoot);
-            go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
-            go.name = name;
-
-            Sprite sprite = Resources.Load<Sprite>(ResourcePath + name);
-            Image image = go.GetComponent<Image>();
-            image.sprite = sprite;
-            images.Add(name, image);
-
-            if (sprite == null) {
-                Debug.Log("Fail to Load Sprite 【" + ResourcePath + name + "】 sprite->" + sprite);
-            }
+            StartCoroutine(AddNewImage(name));
         }
 
-        // imageNames 列表更新
-        imageNames = newNames;
+        // 删除的处理
+        foreach (string name in deleteList) {
+            Destroy(images[name].gameObject);
+            images.Remove(name);
+        }
     }
 
+    private IEnumerator AddNewImage(string name) {
+        Sprite sprite = null;
+        while (sprite == null) {
+            sprite = Resources.Load<Sprite>(ResourcePath + name);
+            yield return new WaitForSeconds(1);
+        }
+
+        GameObject go = Instantiate(ImagePrefab, ImageRoot);
+        go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
+        go.name = name;
+
+        Image image = go.GetComponent<Image>();
+        image.sprite = sprite;
+        images.Add(name, image);
+    }
 
     private void Click(string name = "") {
         if (name == "") {
