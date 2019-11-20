@@ -48,12 +48,12 @@ public class VideoResourceAPI : MonoBehaviour
     }
 
 
-    // path: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
-    public static void Delete(string path, string name) {
-        string destVideoPath = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4";
-        string destVideoPath1 = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4.meta";
-        string destPngPath = Application.dataPath + "/Resources/" + path + "/Thumbnails/" + name + ".png";
-        string destPngPath1 = Application.dataPath + "/Resources/" + path + "/Thumbnails/" + name + ".png.meta";
+    // videoType: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
+    public static void Delete(string videoType, string name) {
+        string destVideoPath = Application.dataPath + "/Resources/" + videoType + "/Videos/" + name + ".mp4";
+        string destVideoPath1 = Application.dataPath + "/Resources/" + videoType + "/Videos/" + name + ".mp4.meta";
+        string destPngPath = Application.dataPath + "/Resources/" + videoType + "/Thumbnails/" + name + ".png";
+        string destPngPath1 = Application.dataPath + "/Resources/" + videoType + "/Thumbnails/" + name + ".png.meta";
 
         File.Delete(destVideoPath);
         File.Delete(destVideoPath1);

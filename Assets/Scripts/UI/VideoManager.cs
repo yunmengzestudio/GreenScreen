@@ -18,6 +18,7 @@ public class VideoManager : MonoBehaviour
     [HideInInspector]
     public bool OnShow = true;
 
+    public string CurrentVideoName = "";
     public bool HideOnAwake = true;
     public string ResourcePath = "Videos/";
 
@@ -44,6 +45,8 @@ public class VideoManager : MonoBehaviour
         }
         if (HideOnAwake)
             Hide();
+
+        if (video) video.prepareCompleted += VideoReady;
     }
 
     private void Update() {
@@ -56,23 +59,22 @@ public class VideoManager : MonoBehaviour
     }
 
 
+    private string preparedNewVideoName;    // 暂存视频名，播放成功的才会被赋值给 CurrentVideoName
     public void Play(string name) {
         // 已经显示 Video
-        if (canvasGroup.alpha > 0 && video.clip && video.clip.name == name) {
+        if (canvasGroup.alpha > 0 && CurrentVideoName == name) {
             Click();
             return;
         }
 
         Show();
-        //StartCoroutine(AsyncPlay(ResourcePath + name));
+        preparedNewVideoName = name;
         string AbsolutePath = VideoResourceAPI.FillVideoPath(name);
         UrlPlay("file://" + AbsolutePath);
     }
 
     private void UrlPlay(string path) {
         video.url = path;
-        
-        video.prepareCompleted += VideoReady;
         video.Prepare();
     }
 
@@ -108,11 +110,13 @@ public class VideoManager : MonoBehaviour
 
         source.Play();
         HideMask();
+        CurrentVideoName = preparedNewVideoName;
     }
 
     public void Stop() {
         video.Stop();
         video.clip = null;
+        CurrentVideoName = "";
         Hide();
     }
 

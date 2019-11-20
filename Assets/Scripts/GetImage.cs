@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ public class GetImage : MonoBehaviour
     private RenderTexture renderTexture;
     public string outpath;
     public string imagename;
+    public event EventHandler Completed;
 
 
     void Start() {
@@ -47,6 +49,8 @@ public class GetImage : MonoBehaviour
 
         vp.frameReady += OnNewFrame;
         vp.sendFrameReadyEvents = true;
+
+        Completed?.Invoke(this, null);
     }
 
     //生成缩略图

@@ -47,6 +47,12 @@ public class VideoResourceUIManager : MonoBehaviour
         if (SelectTagText) {
             SelectTagText.text = Type2Tag[VideoType.Background];
         }
+
+        // 导入视频、缩略图生成成功后触发事件
+        GetImage getImage = transform.Find("GetImage")?.GetComponent<GetImage>();
+        if (getImage) {
+            getImage.Completed += (s, e) => RefreshCurrentPanel();
+        }
     }
 
     // 按钮事件 切换 Panel
@@ -74,25 +80,11 @@ public class VideoResourceUIManager : MonoBehaviour
     }
 
     // 按钮事件 删除视频
-    private VideoPlayer videoPlayer;
     public void DeleteVideo() {
-        if (videoPlayer == null)
-            videoPlayer = video.GetComponent<VideoPlayer>();
-        if (videoPlayer == null || (videoPlayer.clip == null && videoPlayer.url == null))
-            return;
-        string name = "";
-        if (videoPlayer.clip != null) {
-            name = videoPlayer.clip.name;
-        }
-        else if (videoPlayer.url != null) {
-            string[] strs = videoPlayer.url.Split('/');
-            name = strs[strs.Length - 1];
-        }
-
-
+        string name = video.CurrentVideoName;
         string prefix = name.Split('_')[0];
-        string path = Prefix2Type[prefix].ToString("g");
-        VideoResourceAPI.Delete(path, name.TrimEnd(".mp4".ToArray()));
+        string videoType = Prefix2Type[prefix].ToString("g");
+        VideoResourceAPI.Delete(videoType, name.TrimEnd(".mp4".ToArray()));
 
         video.Stop();
         Panels[(int)Prefix2Type[prefix]].UpdateAll();
