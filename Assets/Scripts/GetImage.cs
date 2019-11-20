@@ -20,6 +20,12 @@ public class GetImage : MonoBehaviour
         vp.waitForFirstFrame = true;
         vp.sendFrameReadyEvents = true;
         vp.frameReady += OnNewFrame;
+        vp.source = VideoSource.Url;
+        vp.prepareCompleted += Vp_prepareCompleted;
+    }
+
+    private void Vp_prepareCompleted(VideoPlayer source) {
+        source.Play();
     }
 
     private void OnNewFrame(VideoPlayer source, long frameIdx) {
@@ -31,10 +37,16 @@ public class GetImage : MonoBehaviour
         videoFrameTexture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         videoFrameTexture.Apply();
         RenderTexture.active = null;
+
         vp.frameReady -= OnNewFrame;
         vp.sendFrameReadyEvents = false;
+
         ScaleTexture(videoFrameTexture, 800, 400, outpath + imagename);
         Debug.Log("成功生成缩略图：" + outpath + imagename);
+        vp.Stop();
+
+        vp.frameReady += OnNewFrame;
+        vp.sendFrameReadyEvents = true;
     }
 
     //生成缩略图
@@ -55,23 +67,15 @@ public class GetImage : MonoBehaviour
     public void GeneratePreviewImage(string videoPath, string outImagePath) {
         var splitArray = Regex.Split(videoPath, "Resources/", RegexOptions.IgnoreCase);
         var ImageName = Regex.Split(videoPath, "Videos", RegexOptions.IgnoreCase);
-        string imageName = ImageName[1].TrimEnd(".mp4".ToCharArray()) + ".png";
-        string LoadPath = splitArray[1].TrimEnd(".mp4".ToCharArray());
+        this.imagename = ImageName[1].TrimEnd(".mp4".ToCharArray()) + ".png";
+        this.outpath = outImagePath; 
 
-        this.imagename = imageName;
-        this.outpath = outImagePath;
-        StartCoroutine(LoadClipAndPlay(LoadPath));
+        UrlLoadAndPlay(videoPath);
     }
+    
 
-    private IEnumerator LoadClipAndPlay(string path) {
-        VideoClip clip = null;
-        while (clip == null) {
-            clip = Resources.Load<VideoClip>(path);
-            yield return new WaitForSeconds(1);
-        }
-        Debug.Log("成功加载 Clip:" + path);
-        vp.clip = clip;
-        vp.Play();
+    private void UrlLoadAndPlay(string path) {
+        vp.url = "file://" + path;
+        vp.Prepare();
     }
-
 }

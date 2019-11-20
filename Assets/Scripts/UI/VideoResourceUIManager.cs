@@ -12,7 +12,7 @@ public enum VideoType
     Product = 2
 }
 
-public class VideoResourceManager : MonoBehaviour
+public class VideoResourceUIManager : MonoBehaviour
 {
     public VideoManager video;
     public Text SelectTagText;
@@ -31,11 +31,9 @@ public class VideoResourceManager : MonoBehaviour
 
 
     private void Start() {
-        if (Panels.Count > 0) {
-            Panels[0].gameObject.SetActive(true);
-        }
-        for(int i = 1; i < Panels.Count; i++) {
-            Panels[i].gameObject.SetActive(false);
+        for (int i = 0; i < Panels.Count; i++) {
+            Panels[i].gameObject.SetActive(i == 0);
+            Panels[i].SelectEvent += video.PlayHandle;
         }
 
         // 按钮效果
@@ -80,12 +78,21 @@ public class VideoResourceManager : MonoBehaviour
     public void DeleteVideo() {
         if (videoPlayer == null)
             videoPlayer = video.GetComponent<VideoPlayer>();
-        if (videoPlayer == null || videoPlayer.clip == null)
+        if (videoPlayer == null || (videoPlayer.clip == null && videoPlayer.url == null))
             return;
-        string name = videoPlayer.clip.name;
+        string name = "";
+        if (videoPlayer.clip != null) {
+            name = videoPlayer.clip.name;
+        }
+        else if (videoPlayer.url != null) {
+            string[] strs = videoPlayer.url.Split('/');
+            name = strs[strs.Length - 1];
+        }
+
+
         string prefix = name.Split('_')[0];
         string path = Prefix2Type[prefix].ToString("g");
-        VideoResourceAPI.Delete(path, name);
+        VideoResourceAPI.Delete(path, name.TrimEnd(".mp4".ToArray()));
 
         video.Stop();
         Panels[(int)Prefix2Type[prefix]].UpdateAll();

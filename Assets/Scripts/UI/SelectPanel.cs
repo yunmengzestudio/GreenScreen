@@ -28,7 +28,7 @@ public class SelectPanel : MonoBehaviour
 
     public void UpdateAll() {
         List<string> newNames = new List<string>();
-        string fullPath = "Assets/Resources/" + ResourcePath + (ResourcePath.EndsWith("/") ? "" : "/");
+        string fullPath = Path.Combine(Application.dataPath, "Resources", ResourcePath);
 
         // 生成 newNames:List 当前文件夹下所有 FileSuffix 后缀的文件名
         if (Directory.Exists(fullPath)) {
@@ -36,8 +36,9 @@ public class SelectPanel : MonoBehaviour
             FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
 
             for (int i = 0; i < files.Length; i++) {
-                if (files[i].Name.EndsWith(ImageSuffix))
+                if (files[i].Name.EndsWith(ImageSuffix)) {
                     newNames.Add(files[i].Name.TrimEnd(ImageSuffix.ToArray()));
+                }
             }
         }
 
@@ -62,10 +63,7 @@ public class SelectPanel : MonoBehaviour
 
     private IEnumerator AddNewImage(string name) {
         Sprite sprite = null;
-        while (sprite == null) {
-            sprite = Resources.Load<Sprite>(ResourcePath + name);
-            yield return new WaitForSeconds(1);
-        }
+        sprite = ResourceLoader.LoadSprite(ResourcePath + name + ImageSuffix);
 
         GameObject go = Instantiate(ImagePrefab, ImageRoot);
         go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
@@ -74,6 +72,9 @@ public class SelectPanel : MonoBehaviour
         Image image = go.GetComponent<Image>();
         image.sprite = sprite;
         images.Add(name, image);
+
+        TEST.Instance.Log("[SelectPanel] 成功加载缩略图：" + name);
+        yield return null;
     }
 
     private void Click(string name = "") {

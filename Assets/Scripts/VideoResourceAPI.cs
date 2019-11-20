@@ -35,12 +35,13 @@ public class VideoResourceAPI : MonoBehaviour
 
         if (DialogShow.GetOpenFileName(dialog))
         {
-            string destPath = Application.dataPath + "/Resources/" + outDir + "/Videos/" + prefix + "_" + dialog.fileTitle;
-            File.Copy(dialog.file, destPath, true);
-            Debug.Log("复制成功：" + destPath);
-            
+            string destDir = Application.dataPath + "/Resources/" + outDir + "/Videos/";
+            string videoName = prefix + "_" + dialog.fileTitle;
+            File.Copy(dialog.file, destDir + videoName, true);
+            Debug.Log("复制成功：" + destDir + videoName);
+
             GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
-                destPath,
+                VideoResourceAPI.FillVideoPath(videoName),
                 Application.dataPath + "/Resources/" + outDir + "/Thumbnails/"
                 );
         }
@@ -49,7 +50,6 @@ public class VideoResourceAPI : MonoBehaviour
 
     // path: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
     public static void Delete(string path, string name) {
-        Debug.Log(Application.dataPath);
         string destVideoPath = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4";
         string destVideoPath1 = Application.dataPath + "/Resources/" + path + "/Videos/" + name + ".mp4.meta";
         string destPngPath = Application.dataPath + "/Resources/" + path + "/Thumbnails/" + name + ".png";
@@ -59,8 +59,28 @@ public class VideoResourceAPI : MonoBehaviour
         File.Delete(destVideoPath1);
         File.Delete(destPngPath);
         File.Delete(destPngPath1);
+        Debug.Log("成功删除："+destVideoPath);
     }
 
+    /// <summary>
+    /// 根据视频名称补全其绝对路径，包括视频名及后缀.mp4
+    /// </summary>
+    /// <param name="videoName"></param>
+    /// <returns></returns>
+    public static string FillVideoPath(string videoName) {
+        string prefix = videoName.Split('_')[0];
+        videoName += (videoName.EndsWith(".mp4") ? "" : ".mp4");
+        switch (prefix) {
+            case "BG":
+                return Application.dataPath + "/Resources/Background/Videos/" + videoName;
+            case "EF":
+                return Application.dataPath + "/Resources/Effect/Videos/" + videoName;
+            case "PRO":
+                return Application.dataPath + "/Resources/Product/Videos/" + videoName;
+            default:
+                return "[VideoResourceAPI.FillVideoPath] Error: Video Name Error";
+        }
+    }
 }
     
 

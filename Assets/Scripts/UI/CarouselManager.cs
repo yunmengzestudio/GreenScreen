@@ -74,7 +74,10 @@ public class CarouselManager : MonoBehaviour
         foreach (string imageName in imageNames) {
             GameObject go = Instantiate(CarouselImagePrefab, imagesParent);
             go.transform.localPosition = Vector3.zero;
-            go.GetComponent<Image>().sprite = Resources.Load<Sprite>(ResourcePath + imageName);
+            Sprite sprite = ResourceLoader.LoadSprite(ResourcePath + imageName + ImageSuffix);
+            go.GetComponent<Image>().sprite = sprite;
+
+
             images.Add(go.GetComponent<RectTransform>());
         }
     }

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Video;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using UnityEngine.Networking;
+using System.IO;
 
 [RequireComponent(typeof(VideoPlayer))]
 [RequireComponent(typeof(CanvasGroup))]
@@ -63,7 +64,16 @@ public class VideoManager : MonoBehaviour
         }
 
         Show();
-        StartCoroutine(AsyncPlay(ResourcePath + name));
+        //StartCoroutine(AsyncPlay(ResourcePath + name));
+        string AbsolutePath = VideoResourceAPI.FillVideoPath(name);
+        UrlPlay("file://" + AbsolutePath);
+    }
+
+    private void UrlPlay(string path) {
+        video.url = path;
+        
+        video.prepareCompleted += VideoReady;
+        video.Prepare();
     }
 
     private IEnumerator AsyncPlay(string path) {
@@ -91,6 +101,11 @@ public class VideoManager : MonoBehaviour
     }
 
     private void VideoReady(VideoPlayer source) {
+        // RenderTexture
+        RenderTexture texture = RenderTexture.GetTemporary((int)video.width, (int)video.height);
+        video.targetTexture = texture;
+        rawImage.texture = texture;
+
         source.Play();
         HideMask();
     }
@@ -122,7 +137,7 @@ public class VideoManager : MonoBehaviour
     }
 
 
-    private void PlayHandle(object sender, string name) {
+    public void PlayHandle(object sender, string name) {
         Play(name);
     }
 
