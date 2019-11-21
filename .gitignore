@@ -36,3 +36,8 @@ sysinfo.txt
 *.unitypackage
 Assets/Material.meta
 /SampleRecordings
+
+Effect/
+Product/
+Assets/Resources/Effect.meta
+Assets/Resources/Product.meta

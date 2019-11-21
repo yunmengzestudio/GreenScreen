@@ -36,8 +36,8 @@ public class CarouselManager : MonoBehaviour
         videoManager = GetComponentInChildren<VideoManager>();
         LoadImages();
         Reset(0);
-        if (images.Count > 0) {
-            transform.Find("NoImageTip").gameObject.SetActive(false);
+        if (images.Count == 0) {
+            transform.Find("NoImageTip").gameObject.SetActive(true);
         }
         ResourcePath = ResourcePath + (ResourcePath.EndsWith("/") ? "" : "/");
     }
@@ -76,7 +76,7 @@ public class CarouselManager : MonoBehaviour
             go.transform.localPosition = Vector3.zero;
             Sprite sprite = ResourceLoader.LoadSprite(ResourcePath + imageName + ImageSuffix);
             go.GetComponent<Image>().sprite = sprite;
-
+            go.name = imageName;
 
             images.Add(go.GetComponent<RectTransform>());
         }
@@ -100,17 +100,12 @@ public class CarouselManager : MonoBehaviour
         images[currentIndex].SetAsLastSibling();
         videoManager.Stop();
     }
-
-
+    
     // 点击当前主图片
     public void Click() {
-        if (images.Count == 0) return;
-        string imageName = "";
-        Sprite sprite = images[currentIndex].GetComponent<Image>().sprite;
-        if (sprite) {
-            imageName = sprite.name;
-        }
-        videoManager.Play(imageName);
+        if (images.Count == 0)
+            return;
+        videoManager.Play(images[currentIndex].name);
     }
     
     public void Next(float duration = 0) {

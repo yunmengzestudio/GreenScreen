@@ -20,6 +20,7 @@ public class VideoManager : MonoBehaviour
 
     public string CurrentVideoName = "";
     public bool HideOnAwake = true;
+    public bool HideOnError = false;
     public string ResourcePath = "Videos/";
 
     [Header("Icon Conf")]
@@ -38,7 +39,7 @@ public class VideoManager : MonoBehaviour
         video = GetComponent<VideoPlayer>();
         canvasGroup = GetComponent<CanvasGroup>();
         rawImage = GetComponent<RawImage>();
-        FailLoadTip.SetActive(false);
+        HideFailTip();
 
         if (SelectPanel) {
             SelectPanel.SelectEvent += PlayHandle;
@@ -46,9 +47,14 @@ public class VideoManager : MonoBehaviour
         if (HideOnAwake)
             Hide();
 
-        if (video) video.prepareCompleted += VideoReady;
+        if (video) {
+            video.prepareCompleted += VideoReady;
+            video.errorReceived += Video_errorReceived;
+        }
+
     }
 
+    
     private void Update() {
         if (!OnShow) {
             return;
@@ -68,9 +74,11 @@ public class VideoManager : MonoBehaviour
         }
 
         Show();
+        ShowMask();
+        HideFailTip();
+
         preparedNewVideoName = name;
-        string AbsolutePath = VideoResourceAPI.FillVideoPath(name);
-        UrlPlay("file://" + AbsolutePath);
+        UrlPlay("file://" + VideoResourceAPI.FillVideoPath(name));
     }
 
     private void UrlPlay(string path) {
@@ -78,41 +86,7 @@ public class VideoManager : MonoBehaviour
         video.Prepare();
     }
 
-    private IEnumerator AsyncPlay(string path) {
-        ShowMask();
-        ResourceRequest request = Resources.LoadAsync<VideoClip>(path);
-        yield return request;
-        
-        VideoClip clip = request.asset as VideoClip;
-
-        if (clip == null) {
-            video.clip = null;
-            FailLoadTip.SetActive(true);
-            Debug.Log("加载视频失败：" + path);
-            yield break;
-        }
-
-        // RenderTexture
-        RenderTexture texture = RenderTexture.GetTemporary((int)clip.width, (int)clip.height);
-        video.targetTexture = texture;
-        rawImage.texture = texture;
-
-        video.clip = clip;
-        video.prepareCompleted += VideoReady;
-        video.Prepare();
-    }
-
-    private void VideoReady(VideoPlayer source) {
-        // RenderTexture
-        RenderTexture texture = RenderTexture.GetTemporary((int)video.width, (int)video.height);
-        video.targetTexture = texture;
-        rawImage.texture = texture;
-
-        source.Play();
-        HideMask();
-        CurrentVideoName = preparedNewVideoName;
-    }
-
+    
     public void Stop() {
         video.Stop();
         video.clip = null;
@@ -124,6 +98,9 @@ public class VideoManager : MonoBehaviour
     private Transform _iconTransform;
     private Image _iconImage;
     public void Click() {
+        if (CurrentVideoName == "")
+            return;
+
         if (video.isPlaying) {
             video.Pause();
             _iconTransform = PauseIcon.transform;
@@ -141,13 +118,46 @@ public class VideoManager : MonoBehaviour
     }
 
 
+    #region [事件处理]
+
     public void PlayHandle(object sender, string name) {
         Play(name);
     }
 
+    private void VideoReady(VideoPlayer source) {
+        // RenderTexture
+        RenderTexture texture = RenderTexture.GetTemporary((int)video.width, (int)video.height);
+        video.targetTexture = texture;
+        rawImage.texture = texture;
+
+        source.Play();
+        HideFailTip();
+        HideMask();
+        CurrentVideoName = preparedNewVideoName;
+    }
+
+    private void Video_errorReceived(VideoPlayer source, string message) {
+        Debug.Log(message);
+        video.Stop();
+        CurrentVideoName = "";
+        ShowMask();
+        ShowFailTip();
+        if (HideOnError) Hide();
+    }
+
+    #endregion
+
+    private void ShowFailTip() {
+        if (FailLoadTip && !FailLoadTip.activeSelf)
+            FailLoadTip.SetActive(true);
+    }
+    private void HideFailTip() {
+        if (FailLoadTip && FailLoadTip.activeSelf)
+            FailLoadTip.SetActive(false);
+    }
+
     private void ShowMask() {
         MaskImage.color = Color.black;
-        FailLoadTip.SetActive(false);
     }
     private void HideMask(float duration = .35f) {
         MaskImage.DOColor(Color.clear, duration).SetEase(Ease.InCubic);
