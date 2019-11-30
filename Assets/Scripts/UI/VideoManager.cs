@@ -35,10 +35,13 @@ public class VideoManager : MonoBehaviour
     public GameObject FailLoadTip;
     public SelectPanel SelectPanel;
 
-    private void Start() {
+    private void Awake() {
         video = GetComponent<VideoPlayer>();
         canvasGroup = GetComponent<CanvasGroup>();
         rawImage = GetComponent<RawImage>();
+    }
+
+    private void Start() {
         HideFailTip();
 
         if (SelectPanel) {

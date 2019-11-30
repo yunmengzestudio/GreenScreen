@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CarouselSample.unity
     guid: 671856a1b2e7d9b489f153d9e01d8d2a
+  - enabled: 1
+    path: Assets/Scenes/Main/Main.unity
+    guid: 933f44b2c936a604fbc364ebef36f65f
+  - enabled: 1
+    path: Assets/Scenes/Main/Film.unity
+    guid: 5dbfd49cf8ff7a044948d5cf30950d3f
+  - enabled: 1
+    path: Assets/Scenes/Main/Show.unity
+    guid: f41aefe29c26aa648bf52de379a94569
+  - enabled: 1
+    path: Assets/Scenes/Main/Manage.unity
+    guid: 9bfa9c08f7429264799957da5c2696a9
   m_configObjects: {}

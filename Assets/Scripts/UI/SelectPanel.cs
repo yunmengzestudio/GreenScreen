@@ -72,8 +72,7 @@ public class SelectPanel : MonoBehaviour
         Image image = go.GetComponent<Image>();
         image.sprite = sprite;
         images.Add(name, image);
-
-        TEST.Instance.Log("[SelectPanel] 成功加载缩略图：" + name);
+        
         yield return null;
     }
 
