@@ -1585,7 +1585,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378672575}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1001 &1424790760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1742,6 +1742,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.9150943
       objectReference: {fileID: 0}
+    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1755,11 +1760,6 @@ PrefabInstance:
     - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
