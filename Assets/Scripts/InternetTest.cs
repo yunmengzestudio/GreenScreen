@@ -6,8 +6,16 @@ using Qiniu.Util;
 using Qiniu.IO;
 using Qiniu.IO.Model;
 using Qiniu.Http;
+using UnityEngine.UI;
+using System;
+using RenderHeads.Media.AVProMovieCapture;
 public class InternetTest : MonoBehaviour
 {
+    public GameObject LoadingText;
+    public GameObject PicturePanel;
+    public string saveKey;
+    public string _filePath;
+    public Image Picture;
     private static InternetTest _instance;
     public static InternetTest Instance { get { return _instance; } }
     public string IconData;
@@ -23,9 +31,12 @@ public class InternetTest : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Qiniu.Common.ZoneID zoneId = Qiniu.Common.ZoneID.CN_South;
+        Qiniu.Common.Config.SetZone(zoneId, false);
     }
     private void Update()
     {
+       
         Shift();
     }
     void Shift()
@@ -41,54 +52,52 @@ public class InternetTest : MonoBehaviour
         }
 
     }
+    public void TestGet()
+    {
+        Debug.Log("FilePath=" + CaptureBase.LastFileSaved);
+        _filePath = CaptureBase.LastFileSaved;
+
+        StartCoroutine(Get());
+    }
     IEnumerator Get()
     {
-        UnityWebRequest webRequest = UnityWebRequest.Get("http://129.204.80.144::8080/service/upload");
-
+        UnityWebRequest webRequest = UnityWebRequest.Get("http://lmsc.dominikyang.vip:8080/lmscfw/service/upload");
+        //webRequest.timeout = 10;
         yield return webRequest.SendWebRequest();
         //异常处理，
+
         if (webRequest.isHttpError || webRequest.isNetworkError)
             Debug.Log(webRequest.error);
         else
-        {
-            Debug.Log(webRequest.downloadHandler.text);
-            //UpVidio(webRequest.downloadHandler.text);
+        {    
+            string token =System.Text.Encoding.Default.GetString(webRequest.downloadHandler.data);
+            Debug.Log(token);
+            token = token.Substring(0, token.Length - 2);
+            int x = token.LastIndexOf('\"');
+            //Debug.Log("x=" + x);
+            token =token.Substring(x,token.Length-x);
+            //Debug.Log("token=" + token);
+            token=token.Substring(1, token.Length-1);
+            Debug.Log("token=" + token);
+            UpVidio(token);
         }
 
     }
-    /*
-        public void UpVidio(string token)
-        {
-              /// <summary>
-            /// 简单上传-上传小文件
-            /// </summary>
-        
-                // 生成(上传)凭证时需要使用此Mac
-                // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
-                // 实际应用中，请自行设置您的AccessKey和SecretKey
-                Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-                string bucket = "test";
-                string saveKey = "1.png";
-                string localFile = "D:\\QFL\\1.png";
-                // 上传策略，参见 
-                // https://developer.qiniu.com/kodo/manual/put-policy
-                PutPolicy putPolicy = new PutPolicy();
-                // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
-                // putPolicy.Scope = bucket + ":" + saveKey;
-                putPolicy.Scope = bucket;
-                // 上传策略有效期(对应于生成的凭证的有效期)          
-                putPolicy.SetExpires(3600);
-                // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
-                putPolicy.DeleteAfterDays = 1;
-                // 生成上传凭证，参见
-                // https://developer.qiniu.com/kodo/manual/upload-token            
-                string jstr = putPolicy.ToJsonString();
-                string token = Auth.CreateUploadToken(mac, jstr);
-                UploadManager um = new UploadManager();
-                HttpResult result = um.UploadFile(localFile, saveKey, token);
-                Console.WriteLine(result);
-
-        }*/
+    public void UpVidio(string token)
+    {
+        saveKey = _filePath.Substring(_filePath.LastIndexOf('\\') + 1, _filePath.Length - _filePath.LastIndexOf('\\') - 1);
+        string localFile = _filePath;
+        Debug.Log("saveKey=" + saveKey);
+        Debug.Log("localFile=" + localFile);
+        // 上传策略，参见 
+        UploadManager um = new UploadManager();
+        LoadingText.SetActive(true);
+       HttpResult result = um.UploadFile(localFile, saveKey, token);
+        Debug.Log(result);
+        saveKey = saveKey.Substring(0, saveKey.Length - 4);
+        Debug.Log("fileName" + saveKey);
+        LoadingText.SetActive(false);
+    }
     public void TestPost()
     {
         StartCoroutine(Post());
@@ -98,19 +107,30 @@ public class InternetTest : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         //键值对
-        form.AddField("address", "0xde5de661bec2d4dd3769b5cf6bb81f9852cc22bb");
-        form.AddField("equipId", IconData);
+        form.AddField("fileName", saveKey);
+        form.AddField("suffix", "mp4");
         Debug.Log("send message");
-        //UnityWebRequest webRequest = UnityWebRequest.Post("http://192.168.1.100:8080", form);
-        UnityWebRequest webRequest = UnityWebRequest.Post("http://192.168.43.43:8080/game/add", form);
+        UnityWebRequest webRequest = UnityWebRequest.Post("http://lmsc.dominikyang.vip:8080/lmscfw/service/download", form);
         yield return webRequest.SendWebRequest();
         //异常处理
         if (webRequest.isHttpError || webRequest.isNetworkError)
             Debug.Log(webRequest.error);
         else
         {
-            Debug.Log(webRequest.downloadHandler.text);
+            Debug.Log(webRequest.downloadHandler.data.ToString());
+            Base64ToImg(Picture, webRequest.downloadHandler.data);
+            PicturePanel.SetActive(true);
         }
+    }
+    public void Base64ToImg(Image imgComponent,byte[] recordBase64String)
+    {
+        //string base64 = recordBase64String;
+        //byte[] bytes = Convert.FromBase64String(base64);
+        Texture2D tex2D = new Texture2D(100, 100);
+        tex2D.LoadImage(recordBase64String);
+        Sprite s = Sprite.Create(tex2D, new Rect(0, 0, tex2D.width, tex2D.height), new Vector2(0.5f, 0.5f));
+        imgComponent.sprite = s;
+        Resources.UnloadUnusedAssets();
     }
 
 }

@@ -20,6 +20,7 @@ namespace RenderHeads.Media.AVProMovieCapture
 	/// </summary>
 	public class CaptureBase : MonoBehaviour
 	{
+        
 		public enum FrameRate
 		{
 			One = 1,
@@ -948,8 +949,12 @@ namespace RenderHeads.Media.AVProMovieCapture
 			{
 				// TOOD: make _frameRate floating point, or add timeLapse time system
 				Debug.Log("[AVProMovieCapture] Start File Capture: " + info);
+                Debug.Log("_filePath=" + _filePath);
+                
 				_handle = NativePlugin.CreateRecorderAVI(_filePath, (uint)_targetWidth, (uint)_targetHeight, (int)_frameRate,
-																	(int)(_pixelFormat), _isTopDown, _codecIndex, !noAudio, _unityAudioSampleRate, _unityAudioChannelCount, audioDeviceIndex, audioCodecIndex, _isRealTime, _useMediaFoundationH264, _supportAlpha);
+																	(int)(_pixelFormat), _isTopDown, _codecIndex, !noAudio, _unityAudioSampleRate,
+                                                                    _unityAudioChannelCount, audioDeviceIndex, audioCodecIndex,
+                                                                    _isRealTime, _useMediaFoundationH264, _supportAlpha);
 			}
 			else if (_outputType == OutputType.NamedPipe)
 			{
@@ -1147,11 +1152,12 @@ namespace RenderHeads.Media.AVProMovieCapture
 				//System.Threading.Thread.Sleep(100);
 				NativePlugin.FreeRecorder(_handle);
 				_handle = -1;
-
+                
 #if UNITY_EDITOR
 				if (_outputType == OutputType.VideoFile && !skipPendingFrames && !string.IsNullOrEmpty(_filePath))
 				{
 					LastFileSaved = _filePath;
+                    
 				}
 #endif
 			}
