@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Video;
+using RenderHeads.Media.AVProMovieCapture;
 
 public class GetImage : MonoBehaviour
 {
@@ -81,5 +82,12 @@ public class GetImage : MonoBehaviour
     private void UrlLoadAndPlay(string path) {
         vp.url = "file://" + path;
         vp.Prepare();
+    }
+
+    public void GenerateVideoPreviewImage()
+    {
+        string videopath = CaptureBase.LastFileSaved;
+        string outimagepath = "Assets/Resources/Products/Thumbnails";
+        GeneratePreviewImage(videopath, outimagepath);
     }
 }

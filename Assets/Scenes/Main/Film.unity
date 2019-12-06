@@ -549,6 +549,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1880648707}
+        m_MethodName: GenerateVideoPreviewImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &202494697
@@ -1002,7 +1013,7 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
@@ -3144,6 +3155,8 @@ GameObject:
   - component: {fileID: 1880648705}
   - component: {fileID: 1880648704}
   - component: {fileID: 1880648703}
+  - component: {fileID: 1880648708}
+  - component: {fileID: 1880648707}
   m_Layer: 0
   m_Name: VideoCaptureCamera
   m_TagString: MainCamera
@@ -3178,7 +3191,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055
+    y: 0.05
     width: 1
     height: 1
   near clip plane: 0.3
@@ -3209,7 +3222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880648699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4, y: 1.53, z: -10}
+  m_LocalPosition: {x: -2.47, y: 1.53, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3266,8 +3279,8 @@ MonoBehaviour:
   _audioCapture: {fileID: 1880648703}
   _autoGenerateFilename: 1
   _outputFolderType: 0
-  _outputFolderPath: Videos
-  _autoFilenamePrefix: Demo
+  _outputFolderPath: Assets/Resources/Products/Videos
+  _autoFilenamePrefix: Pro
   _autoFilenameExtension: mp4
   _forceFilename: movie.avi
   _outputType: 0
@@ -3319,6 +3332,61 @@ MonoBehaviour:
   _capture: {fileID: 1880648704}
   _guiSkin: {fileID: 11400000, guid: eb821627fb1a0c044a6fd7a6dabe3147, type: 2}
   _spinCamera: 0
+  RecordCamera: {fileID: 1880648701}
+  RecordCameraRect:
+    serializedVersion: 2
+    x: 1
+    y: 1
+    width: 100
+    height: 100
+--- !u!114 &1880648707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880648699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56569658e113c9438bf0cedbeb7bc44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outpath: 
+  imagename: 
+--- !u!328 &1880648708
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880648699}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 1880648701}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 0
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 0
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
 --- !u!1001 &1885395856
 PrefabInstance:
   m_ObjectHideFlags: 0
