@@ -229,11 +229,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 891527699835179501, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -252,6 +247,11 @@ PrefabInstance:
     - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
       propertyPath: ResourcePath
       value: Background/Thumbnails/
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8445209631640397508, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
@@ -543,6 +543,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9800f6c202307489cfb1e26e0d05f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &956146615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3631881510350777749, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1046071379}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1046071379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,6 +682,16 @@ PrefabInstance:
       propertyPath: ResourcePath
       value: Background/Videos/
       objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: HideOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: VideoRawImage
+      value: 
+      objectReference: {fileID: 956146615}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b13be2c5cafced4d8cc07d145c68d2d, type: 3}
 --- !u!224 &1046071380 stripped

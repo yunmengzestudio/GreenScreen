@@ -9,18 +9,17 @@ using System.IO;
 
 [RequireComponent(typeof(VideoPlayer))]
 [RequireComponent(typeof(CanvasGroup))]
-[RequireComponent(typeof(RawImage))]
 public class VideoManager : MonoBehaviour
 {
     private VideoPlayer video;
     private CanvasGroup canvasGroup;
-    private RawImage rawImage;
     [HideInInspector]
     public bool OnShow = true;
 
     public string CurrentVideoName = "";
     public bool HideOnAwake = true;
     public bool HideOnError = false;
+    public bool AutoResize = true;
     public string ResourcePath = "Videos/";
 
     [Header("Icon Conf")]
@@ -34,11 +33,12 @@ public class VideoManager : MonoBehaviour
     public Image MaskImage;
     public GameObject FailLoadTip;
     public SelectPanel SelectPanel;
+    public RawImage VideoRawImage;
+
 
     private void Awake() {
         video = GetComponent<VideoPlayer>();
         canvasGroup = GetComponent<CanvasGroup>();
-        rawImage = GetComponent<RawImage>();
     }
 
     private void Start() {
@@ -57,7 +57,7 @@ public class VideoManager : MonoBehaviour
 
     }
 
-    
+
     private void Update() {
         if (!OnShow) {
             return;
@@ -89,7 +89,7 @@ public class VideoManager : MonoBehaviour
         video.Prepare();
     }
 
-    
+
     public void Stop() {
         video.Stop();
         video.clip = null;
@@ -120,6 +120,20 @@ public class VideoManager : MonoBehaviour
         _iconImage.DOFade(0, AnimDuration);
     }
 
+    
+    // 重置 RawImage 的大小以适应视频尺寸，参数为视频的尺寸
+    private void Resize(float width, float height) {
+        Vector2 target;
+        Rect rect = GetComponent<RectTransform>().rect;
+
+        // 视频的宽高比比较小时（视频较方），左右两边留空，否则上下留空
+        if ((width / height) < (rect.width / rect.height))
+            target = new Vector2((width / height) * rect.height, rect.height);
+        else
+            target = new Vector2(rect.width, rect.width * (height / width));
+        VideoRawImage.GetComponent<RectTransform>().sizeDelta = target;
+    }
+
 
     #region [事件处理]
 
@@ -129,9 +143,11 @@ public class VideoManager : MonoBehaviour
 
     private void VideoReady(VideoPlayer source) {
         // RenderTexture
-        RenderTexture texture = RenderTexture.GetTemporary((int)video.width, (int)video.height);
+        RenderTexture texture = RenderTexture.GetTemporary(video.texture.width, video.texture.height);
         video.targetTexture = texture;
-        rawImage.texture = texture;
+        VideoRawImage.texture = texture;
+        if (AutoResize)
+            Resize(texture.width, texture.height);
 
         source.Play();
         HideFailTip();
