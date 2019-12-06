@@ -28,9 +28,20 @@ public class CarouselManager : MonoBehaviour
     public float AnimDuration = 0.35f;
 
     [Header("Resource Config")]
-    public string ResourcePath = "Background/Thumbnails/";
-    public string ImageSuffix = ".png";
+    public string ResourcePath = "Background";
+    public string Suffix = ".png";
 
+    private const string ThumbnailName = "Thumbnails";
+    private const string VideoName = "Videos";
+    private const string ImageSuffix = ".png";
+    private string ThumbPath;
+    private string VideoPath;
+
+
+    private void Awake() {
+        ThumbPath = Path.Combine(ResourcePath, ThumbnailName);
+        VideoPath = Path.Combine(ResourcePath, VideoName);
+    }
 
     private void Start() {
         videoManager = GetComponentInChildren<VideoManager>();
@@ -39,7 +50,6 @@ public class CarouselManager : MonoBehaviour
         if (images.Count == 0) {
             transform.Find("NoImageTip").gameObject.SetActive(true);
         }
-        ResourcePath = ResourcePath + (ResourcePath.EndsWith("/") ? "" : "/");
     }
 
     private void Update() {
@@ -74,7 +84,7 @@ public class CarouselManager : MonoBehaviour
         foreach (string imageName in imageNames) {
             GameObject go = Instantiate(CarouselImagePrefab, imagesParent);
             go.transform.localPosition = Vector3.zero;
-            Sprite sprite = ResourceLoader.LoadSprite(ResourcePath + imageName + ImageSuffix);
+            Sprite sprite = LoadThumbnail(imageName);
             go.GetComponent<Image>().sprite = sprite;
             go.name = imageName;
 
@@ -150,21 +160,52 @@ public class CarouselManager : MonoBehaviour
     // 加载 ResourcePath 下的缩略图 name
     private List<string> LoadImageNames() {
         List<string> newNames = new List<string>();
-        string fullPath = "Assets/Resources/" + ResourcePath;
+        string fullPath = Path.Combine(Application.dataPath, "Resources", VideoPath);
 
         // 生成 newNames:List 当前文件夹下所有 FileSuffix 后缀的文件名
         if (Directory.Exists(fullPath)) {
             DirectoryInfo direction = new DirectoryInfo(fullPath);
             FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
 
-            char[] suffixArr = ImageSuffix.ToArray();
+            char[] suffixArr = Suffix.ToArray();
             for (int i = 0; i < files.Length; i++) {
-                if (files[i].Name.EndsWith(ImageSuffix))
+                if (files[i].Name.EndsWith(Suffix))
                     newNames.Add(files[i].Name.TrimEnd(suffixArr));
             }
         }
 
         return newNames;
+    }
+
+    // 加载缩略图，若丢失缩略图则尝试生成
+    private Sprite LoadThumbnail(string imageName) {
+        Sprite sprite = null;
+        string path = Path.Combine(ThumbPath, imageName) + ImageSuffix;
+
+        sprite = ResourceLoader.LoadSprite(path);
+        if (sprite == null) {
+            GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
+                VideoResourceAPI.FillVideoPath(imageName),
+                Path.Combine(Application.dataPath, "Resources", ThumbPath) + "/"
+                );
+            StartCoroutine(ReloadEmptySprite());
+        }
+        return sprite;
+    }
+
+    // 再次尝试加载没有 Sprite 的缩略图，默认延迟0.3秒
+    private IEnumerator ReloadEmptySprite(float delay=.3f) {
+        yield return new WaitForSeconds(delay);
+        foreach (RectTransform item in images) {
+            Image image = item.GetComponent<Image>();
+            if (image.sprite == null) {
+                int times = 3;
+                while (image.sprite == null && times-- > 0) {
+                    image.sprite = ResourceLoader.LoadSprite(Path.Combine(ThumbPath, item.name) + ImageSuffix);
+                    yield return new WaitForSeconds(.1f);
+                }
+            }
+        }
     }
 
     private int Index(int offset = 0) {

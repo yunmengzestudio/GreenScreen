@@ -24,7 +24,13 @@ public class ResourceLoader : MonoBehaviour
         }
 
         //创建文件读取流
-        FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        FileStream fileStream;
+        try {
+            fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        }
+        catch (System.Exception) {
+            return null;
+        }
         fileStream.Seek(0, SeekOrigin.Begin);
 
         byte[] bytes = new byte[fileStream.Length];
