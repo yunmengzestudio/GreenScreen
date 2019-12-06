@@ -87,7 +87,7 @@ public class GetImage : MonoBehaviour
     public void GenerateVideoPreviewImage()
     {
         string videopath = CaptureBase.LastFileSaved;
-        string outimagepath = "Assets/Resources/Products/Thumbnails";
+        string outimagepath = "Assets/Resources/Product/Thumbnails";
         GeneratePreviewImage(videopath, outimagepath);
     }
 }

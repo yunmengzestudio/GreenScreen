@@ -3279,8 +3279,8 @@ MonoBehaviour:
   _audioCapture: {fileID: 1880648703}
   _autoGenerateFilename: 1
   _outputFolderType: 0
-  _outputFolderPath: Assets/Resources/Products/Videos
-  _autoFilenamePrefix: Pro
+  _outputFolderPath: Assets/Resources/Product/Videos
+  _autoFilenamePrefix: PRO
   _autoFilenameExtension: mp4
   _forceFilename: movie.avi
   _outputType: 0

@@ -656,7 +656,7 @@ namespace RenderHeads.Media.AVProMovieCapture
 		protected virtual string GenerateTimestampedFilename(string filenamePrefix, string filenameExtension)
 		{
 			TimeSpan span = (DateTime.Now - DateTime.Now.Date);
-			return string.Format("{0}-{1}-{2}-{3}-{4}s-{5}x{6}.{7}", filenamePrefix, DateTime.Now.Year, DateTime.Now.Month.ToString("D2"), DateTime.Now.Day.ToString("D2"), ((int)(span.TotalSeconds)).ToString(), _targetWidth, _targetHeight, filenameExtension);
+			return string.Format("{0}_{1}-{2}-{3}-{4}s-{5}x{6}.{7}", filenamePrefix, DateTime.Now.Year, DateTime.Now.Month.ToString("D2"), DateTime.Now.Day.ToString("D2"), ((int)(span.TotalSeconds)).ToString(), _targetWidth, _targetHeight, filenameExtension);
 		}
 
 		private static string GetFolder(OutputPath outputPathType, string path)
