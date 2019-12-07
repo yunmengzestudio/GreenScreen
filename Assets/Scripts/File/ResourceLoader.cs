@@ -18,6 +18,20 @@ public class ResourceLoader : MonoBehaviour
     ///     可以是 Resources/ 下的路径也可以是绝对路径，需要加后缀
     /// </param>
     public static Sprite LoadSprite(string path) {
+        Texture2D texture = LoadTexture(path);
+
+        // 创建 Sprite
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        return sprite;
+    }
+
+    /// <summary>
+    ///     用 IO 方式从外部加载图片到 Texture2D
+    /// </summary>
+    /// <param name="path">
+    ///     可以是 Resources/ 下的路径也可以是绝对路径，需要加后缀
+    /// </param>
+    public static Texture2D LoadTexture(string path) {
         // 路径格式处理
         if (!path.Contains(ResourcePath)) {
             path = Path.Combine(ResourcePath, path);
@@ -43,10 +57,6 @@ public class ResourceLoader : MonoBehaviour
         // 创建 Texture
         Texture2D texture = new Texture2D(2, 2);
         texture.LoadImage(bytes);
-
-        // 创建 Sprite
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        return sprite;
+        return texture;
     }
-    
 }

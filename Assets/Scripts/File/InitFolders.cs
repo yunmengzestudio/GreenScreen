@@ -21,6 +21,7 @@ public class InitFolders : MonoBehaviour
             Path.Combine(resourcePath, "Product"),
             Path.Combine(resourcePath, "Background", "Videos"),
             Path.Combine(resourcePath, "Background", "Thumbnails"),
+            Path.Combine(resourcePath, "Background", "Images"),
             Path.Combine(resourcePath, "Effect", "Videos"),
             Path.Combine(resourcePath, "Effect", "Thumbnails"),
             Path.Combine(resourcePath, "Product", "Videos"),

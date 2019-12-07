@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Video;
+using static VideoResourceAPI;
 
-public enum VideoType
-{
-    Background = 0,
-    Effect = 1,
-    Product = 2
-}
 
 public class VideoResourceUIManager : MonoBehaviour
 {
@@ -22,12 +16,8 @@ public class VideoResourceUIManager : MonoBehaviour
     public Color NotSelectBtnColor;
 
     private int curPanelIndex = 0;
-    private Dictionary<string, VideoType> Prefix2Type = new Dictionary<string, VideoType>() {
-        {"BG", VideoType.Background}, {"EF", VideoType.Effect}, {"PRO", VideoType.Product}
-    };
-    private Dictionary<VideoType, string> Type2Tag = new Dictionary<VideoType, string>() {
-        {VideoType.Background, "背景"}, {VideoType.Effect, "特效"}, { VideoType.Product, "成品"}
-    };
+    private Dictionary<string, VideoType> Prefix2Type = VideoResourceAPI.Prefix2Type;
+    private Dictionary<VideoType, string> Type2Tag = VideoResourceAPI.Type2Tag;
 
 
     private void Start() {
@@ -75,21 +65,35 @@ public class VideoResourceUIManager : MonoBehaviour
 
     // 按钮事件 添加视频
     public void AddVideo() {
-        string prefix = Prefix2Type.FirstOrDefault(q => q.Value == ((VideoType)curPanelIndex)).Key;
-        VideoResourceAPI.OpenFile(((VideoType)curPanelIndex).ToString("g"), prefix);
+        StartCoroutine(VideoResourceAPI.ImportFile((VideoType)curPanelIndex));
     }
 
-    // 按钮事件 删除视频
+    // 按钮事件 删除视频（图片）
     public void DeleteVideo() {
+        // 删除图片调用 DeleteImage 单独处理
+        if (video.CurrentVideoName == "" && video.CurrentImageName == "") {
+            return;
+        }
+        else if (video.CurrentImageName != "") {
+            DeleteImage();
+            return;
+        }
+
         string name = video.CurrentVideoName;
         string prefix = name.Split('_')[0];
-        string videoType = Prefix2Type[prefix].ToString("g");
-        VideoResourceAPI.Delete(videoType, name.TrimEnd(".mp4".ToArray()));
+        VideoResourceAPI.Delete(Prefix2Type[prefix], name.TrimEnd(".mp4".ToArray()));
+
 
         video.Stop();
         Panels[(int)Prefix2Type[prefix]].UpdateAll();
     }
-    
+
+    private void DeleteImage() {
+        string name = video.CurrentImageName;
+        string prefix = name.Split('_')[0];
+        VideoResourceAPI.Delete(Prefix2Type[prefix], name.TrimEnd(".png".ToArray()));
+        Panels[(int)Prefix2Type[prefix]].UpdateAll();
+    }
 
     // 按钮事件 刷新当前Panel
     public void RefreshCurrentPanel() {

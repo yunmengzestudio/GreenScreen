@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.IO;
+using System;
 
 [RequireComponent(typeof(VideoPlayer))]
 [RequireComponent(typeof(CanvasGroup))]
@@ -17,6 +18,7 @@ public class VideoManager : MonoBehaviour
     public bool OnShow = true;
 
     public string CurrentVideoName = "";
+    public string CurrentImageName = "";
     public bool HideOnAwake = true;
     public bool HideOnError = false;
     public bool AutoResize = true;
@@ -94,6 +96,7 @@ public class VideoManager : MonoBehaviour
         video.Stop();
         video.clip = null;
         CurrentVideoName = "";
+        CurrentImageName = "";
         Hide();
     }
 
@@ -120,6 +123,23 @@ public class VideoManager : MonoBehaviour
         _iconImage.DOFade(0, AnimDuration);
     }
 
+
+    // 播放图片
+    public void PlayImage(string name) {
+        Stop();
+        Show();
+        HideMask();
+        HideFailTip();
+
+        string fullPath = VideoResourceAPI.FillVideoPath(name);
+        Texture2D texture = ResourceLoader.LoadTexture(fullPath);
+        VideoRawImage.texture = texture;
+        CurrentImageName = name;
+
+        if (AutoResize) {
+            Resize(texture.width, texture.height);
+        }
+    }
     
     // 重置 RawImage 的大小以适应视频尺寸，参数为视频的尺寸
     private void Resize(float width, float height) {
@@ -138,7 +158,20 @@ public class VideoManager : MonoBehaviour
     #region [事件处理]
 
     public void PlayHandle(object sender, string name) {
-        Play(name);
+        string prefix = name.Split('_')[0];
+        VideoResourceAPI.VideoType type;
+        try {
+            type = VideoResourceAPI.Prefix2Type[prefix];
+        }
+        catch (Exception) {
+            Video_errorReceived(null, "[VideoManager.PlayHandle]: Convert Prefix to Type Error");
+            throw;
+        }
+
+        if (VideoResourceAPI.TypeIsVideo(type))
+            Play(name);
+        else
+            PlayImage(name);
     }
 
     private void VideoReady(VideoPlayer source) {
@@ -153,6 +186,7 @@ public class VideoManager : MonoBehaviour
         HideFailTip();
         HideMask();
         CurrentVideoName = preparedNewVideoName;
+        CurrentImageName = "";
     }
 
     private void Video_errorReceived(VideoPlayer source, string message) {
