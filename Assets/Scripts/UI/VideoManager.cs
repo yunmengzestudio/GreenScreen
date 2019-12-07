@@ -34,7 +34,7 @@ public class VideoManager : MonoBehaviour
     [Header("Reference")]
     public Image MaskImage;
     public GameObject FailLoadTip;
-    public SelectPanel SelectPanel;
+    public SelectPanel[] SelectPanels;
     public RawImage VideoRawImage;
 
 
@@ -46,9 +46,10 @@ public class VideoManager : MonoBehaviour
     private void Start() {
         HideFailTip();
 
-        if (SelectPanel) {
-            SelectPanel.SelectEvent += PlayHandle;
+        foreach (SelectPanel panel in SelectPanels) {
+            panel.SelectEvent += PlayHandle;
         }
+
         if (HideOnAwake)
             Hide();
 
