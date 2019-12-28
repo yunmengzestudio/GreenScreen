@@ -2174,10 +2174,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
-      propertyPath: ResourcePath
-      value: Effect/Thumbnails/
-      objectReference: {fileID: 0}
     - target: {fileID: 891527699835179501, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2193,10 +2189,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
+      propertyPath: ResourcePath
+      value: Effect/Thumbnails/
+      objectReference: {fileID: 0}
     - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000059966274
+      value: -0.000005642862
       objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
@@ -2819,10 +2819,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
-      propertyPath: ResourcePath
-      value: Background/Thumbnails/
-      objectReference: {fileID: 0}
     - target: {fileID: 891527699835179501, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2838,10 +2834,29 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
+      propertyPath: ResourcePath
+      value: Background/Thumbnails/
+      objectReference: {fileID: 0}
     - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000059966274
+      value: -0.000005642862
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
@@ -2862,21 +2877,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
@@ -3470,10 +3470,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
-      propertyPath: ResourcePath
-      value: Background/Images/
-      objectReference: {fileID: 0}
     - target: {fileID: 891527699835179501, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3489,10 +3485,29 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1796913597, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
+      propertyPath: ResourcePath
+      value: Background/Images/
+      objectReference: {fileID: 0}
     - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000059966274
+      value: -0.000005642862
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
@@ -3513,21 +3528,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
