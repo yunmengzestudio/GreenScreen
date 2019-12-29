@@ -37,8 +37,8 @@ public class InternetTest : MonoBehaviour
     private void Update()
     {
        
-        Shift();
-    }
+        //Shift();
+    }/*
     void Shift()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -51,7 +51,7 @@ public class InternetTest : MonoBehaviour
             StartCoroutine(Post());
         }
 
-    }
+    }*/
     public void TestGet()
     {
         Debug.Log("FilePath=" + CaptureBase.LastFileSaved);
@@ -85,6 +85,13 @@ public class InternetTest : MonoBehaviour
     }
     public void UpVidio(string token)
     {
+        StartCoroutine(IenumUpVidio(token));
+    }
+    IEnumerator IenumUpVidio(string token)
+    {
+
+        //开启遮罩
+        yield return null;
         saveKey = _filePath.Substring(_filePath.LastIndexOf('\\') + 1, _filePath.Length - _filePath.LastIndexOf('\\') - 1);
         string localFile = _filePath;
         Debug.Log("saveKey=" + saveKey);
@@ -92,22 +99,28 @@ public class InternetTest : MonoBehaviour
         // 上传策略，参见 
         UploadManager um = new UploadManager();
         LoadingText.SetActive(true);
-       HttpResult result = um.UploadFile(localFile, saveKey, token);
+        HttpResult result = um.UploadFile(localFile, saveKey, token);
         Debug.Log(result);
         saveKey = saveKey.Substring(0, saveKey.Length - 4);
         Debug.Log("fileName" + saveKey);
         LoadingText.SetActive(false);
+
+        //结束遮罩
+
     }
     public void TestPost()
     {
-        StartCoroutine(Post());
+        StartCoroutine(Post(saveKey));
     }
-
-    IEnumerator Post()
+    public void GetQRcode(string fileName)
+    {
+        StartCoroutine(Post(fileName));
+    }
+    IEnumerator Post(string fileName)
     {
         WWWForm form = new WWWForm();
         //键值对
-        form.AddField("fileName", saveKey);
+        form.AddField("fileName", fileName);
         form.AddField("suffix", "mp4");
         Debug.Log("send message");
         UnityWebRequest webRequest = UnityWebRequest.Post("http://lmsc.dominikyang.vip:8080/lmscfw/service/download", form);
