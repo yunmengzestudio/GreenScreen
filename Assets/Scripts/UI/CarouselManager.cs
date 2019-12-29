@@ -36,6 +36,10 @@ public class CarouselManager : MonoBehaviour
     private const string ImageSuffix = ".png";
     private string ThumbPath;
     private string VideoPath;
+    
+    [Header("QR Code")]
+    public CanvasGroup QRCodeCanvasGroup;
+    public Image QRCodeImage;
 
 
     private void Awake() {
@@ -44,6 +48,10 @@ public class CarouselManager : MonoBehaviour
     }
 
     private void Start() {
+        // 隐藏二维码 并 绑定图片到二维码加载类
+        HideQRCode();
+        InternetTest.Instance.Picture = QRCodeImage;
+
         videoManager = GetComponentInChildren<VideoManager>();
         LoadImages();
         Reset(0);
@@ -213,4 +221,26 @@ public class CarouselManager : MonoBehaviour
             ? currentIndex
             : (images.Count + currentIndex + offset) % images.Count;
     }
+
+
+    #region <QR Code>
+
+    // 隐藏二维码
+    public void HideQRCode() {
+        QRCodeCanvasGroup.blocksRaycasts = false;
+        QRCodeCanvasGroup.alpha = 0;
+    }
+
+    // 加载并显示二维码
+    public void ShowQRCode() {
+        QRCodeCanvasGroup.blocksRaycasts = true;
+        QRCodeCanvasGroup.alpha = 1;
+
+        // 加载二维码
+        string videoName = images[currentIndex].name;
+        InternetTest.Instance.GetQRcode(videoName);
+    }
+
+    #endregion
+    
 }
