@@ -131,7 +131,6 @@ public class VideoManager : MonoBehaviour
         Show();
         HideMask();
         HideFailTip();
-
         string fullPath = VideoResourceAPI.FillVideoPath(name);
         Texture2D texture = ResourceLoader.LoadTexture(fullPath);
         VideoRawImage.texture = texture;

@@ -72,7 +72,10 @@ public class GetImage : MonoBehaviour
     public void GeneratePreviewImage(string videoPath, string outImagePath) {
         var splitArray = Regex.Split(videoPath, "Resources/", RegexOptions.IgnoreCase);
         var ImageName = Regex.Split(videoPath, "Videos", RegexOptions.IgnoreCase);
-        this.imagename = ImageName[1].TrimEnd(".mp4".ToCharArray()) + ".png";
+
+
+
+        this.imagename = ImageName[1] + ".png";
         this.outpath = outImagePath; 
 
         UrlLoadAndPlay(videoPath);

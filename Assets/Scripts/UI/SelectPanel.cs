@@ -36,8 +36,22 @@ public class SelectPanel : MonoBehaviour
             FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
 
             for (int i = 0; i < files.Length; i++) {
-                if (files[i].Name.EndsWith(ImageSuffix)) {
-                    newNames.Add(files[i].Name.TrimEnd(ImageSuffix.ToArray()));
+                if (files[i].Name.EndsWith(ImageSuffix))
+                {
+                    var namestrs = files[i].Name.Split('.');
+                    string temp = "";
+                    for (int j = 0; j < namestrs.Length - 1; j++)
+                    {
+                        if (j != namestrs.Length - 2)
+                        {
+                            temp += namestrs[j] + ".";
+                        }
+                        else
+                        {
+                            temp += namestrs[j];
+                        }
+                    }
+                    newNames.Add(temp);
                 }
             }
         }
@@ -63,8 +77,9 @@ public class SelectPanel : MonoBehaviour
 
     private IEnumerator AddNewImage(string name) {
         Sprite sprite = null;
-        sprite = ResourceLoader.LoadSprite(ResourcePath + name + ImageSuffix);
+        //Debug.Log(ResourcePath + name + ImageSuffix);
 
+        sprite = ResourceLoader.LoadSprite(ResourcePath + name + ImageSuffix);
         GameObject go = Instantiate(ImagePrefab, ImageRoot);
         go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
         go.name = name;

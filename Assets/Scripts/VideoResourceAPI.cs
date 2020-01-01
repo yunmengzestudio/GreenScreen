@@ -81,7 +81,7 @@ public class VideoResourceAPI : MonoBehaviour
 
         if (DialogShow.GetOpenFileName(dialog)) {
             string destDir = Path.Combine(Application.dataPath, "Resources", outDir, "Images/");
-            string name = prefix + "_" + dialog.fileTitle;
+            string name = prefix + "_" + dialog.fileTitle+".png";
             string fullPath = Path.Combine(destDir, name);
             File.Copy(dialog.file, fullPath, true);
             Debug.Log("复制成功：" + fullPath);
@@ -95,7 +95,7 @@ public class VideoResourceAPI : MonoBehaviour
 
         dialog.structSize = Marshal.SizeOf(dialog);
 
-        dialog.filter = ".mp4\0*.mp4";
+        dialog.filter = ".mp4\0*.mp4\0webm文件\0*.webm";
 
         dialog.file = new string(new char[256]);
 
@@ -109,7 +109,7 @@ public class VideoResourceAPI : MonoBehaviour
 
         dialog.title = "Open File Dialog";
 
-        dialog.defExt = "mp4";//显示文件的类型
+        //dialog.defExt = "mp4";//显示文件的类型
         //注意一下项目不一定要全选 但是0x00000008项不要缺少
         dialog.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;  //OFN_EXPLORER|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST| OFN_ALLOWMULTISELECT|OFN_NOCHANGEDIR
 
@@ -161,12 +161,27 @@ public class VideoResourceAPI : MonoBehaviour
     /// <returns></returns>
     public static string FillVideoPath(string name) {
         string prefix = name.Split('_')[0];
-        if (TypeIsVideo(Prefix2Type[prefix])) {
-            name += (name.EndsWith(".mp4") ? "" : ".mp4");
+
+        if (!TypeIsVideo(Prefix2Type[prefix]))
+        {
+            name += ".png";
         }
-        else {
-            name += (name.EndsWith(".png") ? "" : ".png");
-        }
+
+        //if (TypeIsVideo(Prefix2Type[prefix])) {
+        //    //name += (name.EndsWith(".mp4") ? "" : ".mp4");
+        //}
+        //else {
+        //    name += (name.EndsWith(".png") ? "" : ".png");
+        //}
+
+        //var namestrs = name.Split('.');
+        //string temp = "";
+        //for (int i = 0; i < namestrs.Length - 1; i++)
+        //{
+        //    temp += namestrs[i];
+        //}
+        //name = temp;
+
         switch (prefix) {
             case "BG":
                 return Application.dataPath + "/Resources/Background/Videos/" + name;
