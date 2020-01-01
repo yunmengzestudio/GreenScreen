@@ -132,11 +132,12 @@ public class VideoResourceAPI : MonoBehaviour
     public static void Delete(VideoType type, string name) {
         string dir = Path.Combine(Application.dataPath, "Resources", TypeToDir(type));
         string[] paths;
-        
-        if (TypeIsVideo(type)) {
+
+        if (type == VideoType.Background|| type == VideoType.Effect)
+        {
             paths = new string[] {
-                Path.Combine(dir, "Videos", name) + ".mp4",
-                Path.Combine(dir, "Videos", name) + ".mp4.meta",
+                Path.Combine(dir, "Videos", name) ,
+                Path.Combine(dir, "Videos", name) + ".meta",
                 Path.Combine(dir, "Thumbnails", name) + ".png",
                 Path.Combine(dir, "Thumbnails", name) + ".png.meta"
             };
@@ -147,7 +148,7 @@ public class VideoResourceAPI : MonoBehaviour
                 Path.Combine(dir, "Images", name) + ".png.meta"
             };
         }
-
+        
         foreach (string path in paths) {
             File.Delete(path);
         }

@@ -81,17 +81,23 @@ public class VideoResourceUIManager : MonoBehaviour
 
         string name = video.CurrentVideoName;
         string prefix = name.Split('_')[0];
-        VideoResourceAPI.Delete(Prefix2Type[prefix], name.TrimEnd(".mp4".ToArray()));
-
-
+        Debug.Log(name);
         video.Stop();
+        StartCoroutine(StartDeleteVideo(name, prefix));
+    }
+
+    IEnumerator StartDeleteVideo(string name,string prefix)
+    {
+        //如果不延迟会删除失败
+        yield return new WaitForSeconds(0.2f);
+        VideoResourceAPI.Delete(Prefix2Type[prefix], name);
         Panels[(int)Prefix2Type[prefix]].UpdateAll();
     }
 
     private void DeleteImage() {
         string name = video.CurrentImageName;
         string prefix = name.Split('_')[0];
-        VideoResourceAPI.Delete(Prefix2Type[prefix], name.TrimEnd(".png".ToArray()));
+        VideoResourceAPI.Delete(Prefix2Type[prefix], name);
         Panels[(int)Prefix2Type[prefix]].UpdateAll();
     }
 
