@@ -87,10 +87,10 @@ public class GetImage : MonoBehaviour
         vp.Prepare();
     }
 
-    public void GenerateVideoPreviewImage()
-    {
-        string videopath = CaptureBase.LastFileSaved;
-        string outimagepath = "Assets/Resources/Product/Thumbnails";
-        GeneratePreviewImage(videopath, outimagepath);
-    }
+    //public void GenerateVideoPreviewImage()
+    //{
+    //    string videopath = CaptureBase.LastFileSaved;
+    //    string outimagepath = "Assets/Resources/Product/Thumbnails";
+    //    GeneratePreviewImage(videopath, outimagepath);
+    //}
 }

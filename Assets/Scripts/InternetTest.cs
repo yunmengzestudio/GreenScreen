@@ -52,13 +52,13 @@ public class InternetTest : MonoBehaviour
         }
 
     }*/
-    public void TestGet()
-    {
-        Debug.Log("FilePath=" + CaptureBase.LastFileSaved);
-        _filePath = CaptureBase.LastFileSaved;
+    //public void TestGet()
+    //{
+    //    Debug.Log("FilePath=" + CaptureBase.LastFileSaved);
+    //    _filePath = CaptureBase.LastFileSaved;
 
-        StartCoroutine(Get());
-    }
+    //    StartCoroutine(Get());
+    //}
     IEnumerator Get()
     {
         UnityWebRequest webRequest = UnityWebRequest.Get("http://lmsc.dominikyang.vip:8080/lmscfw/service/upload");
