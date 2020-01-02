@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,23 +36,9 @@ public class SelectPanel : MonoBehaviour
             DirectoryInfo direction = new DirectoryInfo(fullPath);
             FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
 
-            for (int i = 0; i < files.Length; i++) {
-                if (files[i].Name.EndsWith(ImageSuffix))
-                {
-                    var namestrs = files[i].Name.Split('.');
-                    string temp = "";
-                    for (int j = 0; j < namestrs.Length - 1; j++)
-                    {
-                        if (j != namestrs.Length - 2)
-                        {
-                            temp += namestrs[j] + ".";
-                        }
-                        else
-                        {
-                            temp += namestrs[j];
-                        }
-                    }
-                    newNames.Add(temp);
+            foreach (FileInfo file in files) {
+                if (ResAPI.HasSuffix(file.Name, false)) {
+                    newNames.Add(ResAPI.RemoveSuffix(file.Name));
                 }
             }
         }
@@ -79,7 +66,7 @@ public class SelectPanel : MonoBehaviour
         Sprite sprite = null;
         //Debug.Log(ResourcePath + name + ImageSuffix);
 
-        sprite = ResourceLoader.LoadSprite(ResourcePath + name + ImageSuffix);
+        sprite = ResourceLoader.LoadSprite(ResourcePath + name /*+ ImageSuffix*/);
         GameObject go = Instantiate(ImagePrefab, ImageRoot);
         go.GetComponent<Button>().onClick.AddListener(delegate () { Click(name); });
         go.name = name;

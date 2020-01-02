@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,8 @@ public class TabControl : MonoBehaviour
 
     private List<CanvasGroup> canvasGroups = new List<CanvasGroup>();
     private List<Image> ButtonImages = new List<Image>();
-    private int index = 0;
+    public int Index { get; private set; } = 0;
+    public event EventHandler IndexChanged;
 
 
     private void Start() {
@@ -59,22 +61,23 @@ public class TabControl : MonoBehaviour
     }
 
     public void SwitchTab(int index) {
-        if (index == this.index || index > canvasGroups.Count || index < 0)
+        if (index == this.Index || index > canvasGroups.Count || index < 0)
             return;
 
         // Content
-        canvasGroups[this.index].alpha = 0f;
-        canvasGroups[this.index].blocksRaycasts = false;
+        canvasGroups[this.Index].alpha = 0f;
+        canvasGroups[this.Index].blocksRaycasts = false;
         canvasGroups[index].alpha = 1f;
         canvasGroups[index].blocksRaycasts = true;
 
         // 按钮
         if (index < ButtonImages.Count) {
-            ButtonImages[this.index].color = NotSelectBtnColor;
+            ButtonImages[this.Index].color = NotSelectBtnColor;
             ButtonImages[index].color = SelectBtnColor;
         }
         
-        this.index = index;
+        this.Index = index;
+        IndexChanged?.Invoke(this, null);
     }
 
 }

@@ -84,7 +84,7 @@ public class VideoManager : MonoBehaviour
         HideFailTip();
 
         preparedNewVideoName = name;
-        UrlPlay("file://" + VideoResourceAPI.FillVideoPath(name));
+        UrlPlay("file://" + ResAPI.Instance.FillVideoPath(name));
     }
 
     private void UrlPlay(string path) {
@@ -131,7 +131,7 @@ public class VideoManager : MonoBehaviour
         Show();
         HideMask();
         HideFailTip();
-        string fullPath = VideoResourceAPI.FillVideoPath(name);
+        string fullPath = ResAPI.Instance.FillVideoPath(name);
         Texture2D texture = ResourceLoader.LoadTexture(fullPath);
         VideoRawImage.texture = texture;
         CurrentImageName = name;
@@ -159,16 +159,16 @@ public class VideoManager : MonoBehaviour
 
     public void PlayHandle(object sender, string name) {
         string prefix = name.Split('_')[0];
-        VideoResourceAPI.VideoType type;
+        ResAPI.VideoType type;
         try {
-            type = VideoResourceAPI.Prefix2Type[prefix];
+            type = ResAPI.Prefix2Type[prefix];
         }
         catch (Exception) {
             Video_errorReceived(null, "[VideoManager.PlayHandle]: Convert Prefix to Type Error");
             throw;
         }
 
-        if (VideoResourceAPI.TypeIsVideo(type))
+        if (ResAPI.TypeIsVideo(type))
             Play(name);
         else
             PlayImage(name);

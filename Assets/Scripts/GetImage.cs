@@ -71,11 +71,11 @@ public class GetImage : MonoBehaviour
 
     public void GeneratePreviewImage(string videoPath, string outImagePath) {
         var splitArray = Regex.Split(videoPath, "Resources/", RegexOptions.IgnoreCase);
-        var ImageName = Regex.Split(videoPath, "Videos", RegexOptions.IgnoreCase);
+        var ImageName = Regex.Split(videoPath, "Videos/", RegexOptions.IgnoreCase);
 
-
-
-        this.imagename = ImageName[1] + ".png";
+        // 自己生成的缩略图都默认是 .png
+        this.imagename = ResAPI.RemoveSuffix(ImageName[1]) + ".png";
+        //this.imagename = ImageName[1] + ".png";
         this.outpath = outImagePath; 
 
         UrlLoadAndPlay(videoPath);

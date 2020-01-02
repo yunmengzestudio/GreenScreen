@@ -269,18 +269,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 175297970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1546457041}
-        m_MethodName: SwitchPanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &175297970
@@ -475,7 +464,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 194580214}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1038343344}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9800f6c202307489cfb1e26e0d05f8, type: 3}
@@ -559,18 +548,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 215470857}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1546457041}
-        m_MethodName: SwitchPanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &215470857
@@ -844,7 +822,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 324684219}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2106454367}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9800f6c202307489cfb1e26e0d05f8, type: 3}
@@ -1174,18 +1152,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 441121512}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1546457041}
-        m_MethodName: SwitchPanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &441121512
@@ -1374,7 +1341,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 541796058}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1205517200}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9800f6c202307489cfb1e26e0d05f8, type: 3}
@@ -1941,6 +1908,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933718585}
   m_CullTransparentMesh: 0
+--- !u!1 &1038343344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 891527700924770556, guid: 89506d2ac48b88f44b72c5b3b8156929,
+    type: 3}
+  m_PrefabInstance: {fileID: 194580214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1095280603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 891527700924770556, guid: 89506d2ac48b88f44b72c5b3b8156929,
+    type: 3}
+  m_PrefabInstance: {fileID: 1760324114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1184644109 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6597443827902059247, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
@@ -2048,6 +2027,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1205517200 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 891527700924770556, guid: 89506d2ac48b88f44b72c5b3b8156929,
+    type: 3}
+  m_PrefabInstance: {fileID: 541796058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1226407885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,7 +2090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1244958807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2610,6 +2595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1546457040}
   - component: {fileID: 1546457041}
+  - component: {fileID: 1546457042}
   m_Layer: 5
   m_Name: VideoResourceManager
   m_TagString: Untagged
@@ -2665,13 +2651,30 @@ MonoBehaviour:
   - {fileID: 194580216}
   - {fileID: 1760324116}
   - {fileID: 324684221}
-  ButtonImages:
-  - {fileID: 441121512}
-  - {fileID: 1729516656}
-  - {fileID: 215470857}
-  - {fileID: 175297970}
+--- !u!114 &1546457042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546457039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88436c7b59ba824bb7583df139eff2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Contents:
+  - {fileID: 1205517200}
+  - {fileID: 1038343344}
+  - {fileID: 1095280603}
+  - {fileID: 2106454367}
+  Buttons:
+  - {fileID: 441121511}
+  - {fileID: 1729516655}
+  - {fileID: 215470856}
+  - {fileID: 175297969}
   SelectBtnColor: {r: 1, g: 1, b: 1, a: 1}
-  NotSelectBtnColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+  NotSelectBtnColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
 --- !u!1 &1729516653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,18 +2753,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1729516656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1546457041}
-        m_MethodName: SwitchPanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1729516656
@@ -2956,7 +2948,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1760324114}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1095280603}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9800f6c202307489cfb1e26e0d05f8, type: 3}
@@ -3079,21 +3071,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: SelectPanel
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: ResourcePath
-      value: Background/Videos/
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059233, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
       propertyPath: m_VideoClip
@@ -3117,6 +3094,21 @@ PrefabInstance:
     - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
       propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: SelectPanel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: ResourcePath
+      value: Background/Videos/
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059233, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_Texture
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3349,3 +3341,9 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973881682}
   m_CullTransparentMesh: 0
+--- !u!1 &2106454367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 891527700924770556, guid: 89506d2ac48b88f44b72c5b3b8156929,
+    type: 3}
+  m_PrefabInstance: {fileID: 324684219}
+  m_PrefabAsset: {fileID: 0}

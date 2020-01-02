@@ -193,7 +193,7 @@ public class CarouselManager : MonoBehaviour
         sprite = ResourceLoader.LoadSprite(path);
         if (sprite == null) {
             GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
-                VideoResourceAPI.FillVideoPath(imageName),
+                ResAPI.Instance.FillVideoPath(imageName),
                 Path.Combine(Application.dataPath, "Resources", ThumbPath) + "/"
                 );
             StartCoroutine(ReloadEmptySprite());

@@ -15,9 +15,17 @@ public class ResourceLoader : MonoBehaviour
     ///     用 IO 方式从外部加载图片到 Sprite
     /// </summary>
     /// <param name="path">
-    ///     可以是 Resources/ 下的路径也可以是绝对路径，需要加后缀
+    ///     可以是 Resources/ 下的路径也可以是绝对路径，不加后缀
     /// </param>
     public static Sprite LoadSprite(string path) {
+        // 路径格式处理
+        if (!path.Contains(ResourcePath)) {
+            path = Path.Combine(ResourcePath, path);
+        }
+        if (!ResAPI.HasSuffix(path, false)) {
+            path = ResAPI.FillSuffix(path);
+        }
+
         Texture2D texture = LoadTexture(path);
 
         // 创建 Sprite
@@ -32,11 +40,6 @@ public class ResourceLoader : MonoBehaviour
     ///     可以是 Resources/ 下的路径也可以是绝对路径，需要加后缀
     /// </param>
     public static Texture2D LoadTexture(string path) {
-        // 路径格式处理
-        if (!path.Contains(ResourcePath)) {
-            path = Path.Combine(ResourcePath, path);
-        }
-
         //创建文件读取流
         FileStream fileStream;
         try {

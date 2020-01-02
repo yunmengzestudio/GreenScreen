@@ -6,8 +6,9 @@ using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine.Video;
 using System.Linq;
+using System.Text.RegularExpressions;
 
-public class VideoResourceAPI : MonoBehaviour
+public class ResAPI
 {
     public enum VideoType {
         Background = 0,
@@ -16,12 +17,50 @@ public class VideoResourceAPI : MonoBehaviour
         BackgroundImage = 3
     }
 
+    public static string[] VideoSuffix = new string[] {
+        ".mp4", ".webm"
+    };
+    public static string[] ImageSuffix = new string[] {
+        ".png", ".jpg"
+    };
+    private string[] FolderPaths = new string[] {
+        Application.dataPath + "/Resources/Background/Videos/" ,
+        Application.dataPath + "/Resources/Effect/Videos/",
+        Application.dataPath + "/Resources/Product/Videos/",
+        Application.dataPath + "/Resources/Background/Images/"
+    };
+
+
+    /// <summary>
+    ///     判断 name 是否含有 video 或者 image 的后缀
+    /// </summary>
+    /// <param name="video">
+    ///     true -> video, false -> image
+    /// </param>
+    public static bool HasSuffix(string name, bool video=true) {
+        string[] Suffixs = video ? VideoSuffix : ImageSuffix;
+
+        foreach (string suffix in Suffixs) {
+            if (name.EndsWith(suffix))
+                return true;
+        }
+        return false;
+    }
+
+
+    // 删除后缀并返回
+    public static string RemoveSuffix(string name) {
+        return Regex.Replace(name, @"\.\w+$", "");
+    }
+
+
     /// <summary>
     ///     判断该类型是否为视频
     /// </summary>
     public static bool TypeIsVideo(VideoType type) {
         return (int)type <= 2;
     }
+
 
     /// <summary>
     ///     根据类型，返回所属文件夹名 (Background,Effect,Product)
@@ -38,6 +77,7 @@ public class VideoResourceAPI : MonoBehaviour
         }
     }
 
+
     public static Dictionary<string, VideoType> Prefix2Type = new Dictionary<string, VideoType>() {
         { "BG", VideoType.Background },
         { "EF", VideoType.Effect },
@@ -51,14 +91,26 @@ public class VideoResourceAPI : MonoBehaviour
         { VideoType.BackgroundImage, "背景图" }
     };
 
+    private static ResAPI instance = null;
+    public static ResAPI Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = new ResAPI();
+            return instance;
+        }
+    }
+    
+
     /// <summary>
     ///     根据类型，导入视频（图片）
     /// </summary>
-    public static IEnumerator ImportFile(VideoType type) {
+    public IEnumerator ImportFile(VideoType type) {
         string outDir = TypeToDir(type);
         string prefix = Prefix2Type.FirstOrDefault(q => q.Value == type).Key;
         if (TypeIsVideo(type)) {
-            OpenFile(outDir, prefix);
+            ImportVideoFile(outDir, prefix);
         }
         else {
             ImportImageFile(outDir, prefix);
@@ -69,7 +121,7 @@ public class VideoResourceAPI : MonoBehaviour
     private static void ImportImageFile(string outDir, string prefix) {
         FileOpenDialog dialog = new FileOpenDialog();
         dialog.structSize = Marshal.SizeOf(dialog);
-        dialog.filter = ".png\0*.png";
+        dialog.filter = "png\0*.png\0jpg\0*.jpg";
         dialog.file = new string(new char[256]);
         dialog.maxFile = dialog.file.Length;
         dialog.fileTitle = new string(new char[64]);
@@ -81,7 +133,7 @@ public class VideoResourceAPI : MonoBehaviour
 
         if (DialogShow.GetOpenFileName(dialog)) {
             string destDir = Path.Combine(Application.dataPath, "Resources", outDir, "Images/");
-            string name = prefix + "_" + dialog.fileTitle+".png";
+            string name = prefix + "_" + dialog.fileTitle /*+ ".png"*/;
             string fullPath = Path.Combine(destDir, name);
             File.Copy(dialog.file, fullPath, true);
             Debug.Log("复制成功：" + fullPath);
@@ -89,8 +141,7 @@ public class VideoResourceAPI : MonoBehaviour
     }
 
     // outPath: Resource 下的路径
-    private static void OpenFile(string outDir,string prefix)
-    {
+    private static void ImportVideoFile(string outDir, string prefix) {
         FileOpenDialog dialog = new FileOpenDialog();
 
         dialog.structSize = Marshal.SizeOf(dialog);
@@ -113,15 +164,14 @@ public class VideoResourceAPI : MonoBehaviour
         //注意一下项目不一定要全选 但是0x00000008项不要缺少
         dialog.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;  //OFN_EXPLORER|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST| OFN_ALLOWMULTISELECT|OFN_NOCHANGEDIR
 
-        if (DialogShow.GetOpenFileName(dialog))
-        {
+        if (DialogShow.GetOpenFileName(dialog)) {
             string destDir = Application.dataPath + "/Resources/" + outDir + "/Videos/";
             string videoName = prefix + "_" + dialog.fileTitle;
             File.Copy(dialog.file, destDir + videoName, true);
             Debug.Log("复制成功：" + destDir + videoName);
 
             GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
-                VideoResourceAPI.FillVideoPath(videoName),
+                ResAPI.Instance.FillVideoPath(videoName),
                 Application.dataPath + "/Resources/" + outDir + "/Thumbnails/"
                 );
         }
@@ -131,70 +181,65 @@ public class VideoResourceAPI : MonoBehaviour
     // videoType: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
     public static void Delete(VideoType type, string name) {
         string dir = Path.Combine(Application.dataPath, "Resources", TypeToDir(type));
-        string[] paths;
+        List<string> paths = new List<string>();
 
-        if (type == VideoType.Background|| type == VideoType.Effect)
-        {
-            paths = new string[] {
-                Path.Combine(dir, "Videos", name) ,
-                Path.Combine(dir, "Videos", name) + ".meta",
-                Path.Combine(dir, "Thumbnails", name) + ".png",
-                Path.Combine(dir, "Thumbnails", name) + ".png.meta"
-            };
+        if (TypeIsVideo(type)) {
+            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png");
+            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png.meta");
+            foreach (string suf in VideoSuffix) {
+                paths.Add(Path.Combine(dir, "Videos", name) + suf);
+                paths.Add(Path.Combine(dir, "Videos", name) + suf + ".meta");
+            }
         }
         else {
-            paths = new string[] {
-                Path.Combine(dir, "Images", name) + ".png",
-                Path.Combine(dir, "Images", name) + ".png.meta"
-            };
+            foreach (string suf in ImageSuffix) {
+                paths.Add(Path.Combine(dir, "Images", name) + suf);
+                paths.Add(Path.Combine(dir, "Images", name) + suf + ".meta");
+            }
         }
-        
+
         foreach (string path in paths) {
             File.Delete(path);
         }
-        Debug.Log("成功删除：" + paths[0]);
+        Debug.Log("成功删除：" + RemoveSuffix(paths[0]));
+    }
+    
+
+    /// <summary>
+    ///     根据视频/图片名称补全其绝对路径，包括补全后缀
+    /// </summary>
+    public string FillVideoPath(string name) {
+        VideoType type = Prefix2Type[name.Split('_')[0]];
+        string dir = FolderPaths[(int)type];
+
+        if (HasSuffix(name))
+            name = RemoveSuffix(name);
+
+        return searchFile(dir, name);
     }
 
     /// <summary>
-    /// 根据视频名称补全其绝对路径，包括视频名及后缀.mp4；图片补全.png
+    ///     根据 path (路径 + 文件名) 补全后缀
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static string FillVideoPath(string name) {
-        string prefix = name.Split('_')[0];
+    public static string FillSuffix(string path) {
+        Regex reg = new Regex(@"(.*)[\\/]([\w ]+)$");
+        GroupCollection res = reg.Match(path).Groups;
+        return searchFile(res[1].Value, res[2].Value);
+    }
 
-        if (!TypeIsVideo(Prefix2Type[prefix]))
-        {
-            name += ".png";
+    // 在文件夹 dir 中查找文件名为 name 的文件全名
+    private static string searchFile(string dir, string name) {
+        if (Directory.Exists(dir)) {
+            DirectoryInfo directory = new DirectoryInfo(dir);
+            FileInfo[] files = directory.GetFiles("*", SearchOption.AllDirectories);
+            foreach (FileInfo file in files) {
+                if (RemoveSuffix(file.Name) == name) {
+                    return Path.Combine(dir, file.Name);
+                }
+            }
+            return "[VideoResourceAPI.searchFile] Error: No Such File!";
         }
-
-        //if (TypeIsVideo(Prefix2Type[prefix])) {
-        //    //name += (name.EndsWith(".mp4") ? "" : ".mp4");
-        //}
-        //else {
-        //    name += (name.EndsWith(".png") ? "" : ".png");
-        //}
-
-        //var namestrs = name.Split('.');
-        //string temp = "";
-        //for (int i = 0; i < namestrs.Length - 1; i++)
-        //{
-        //    temp += namestrs[i];
-        //}
-        //name = temp;
-
-        switch (prefix) {
-            case "BG":
-                return Application.dataPath + "/Resources/Background/Videos/" + name;
-            case "EF":
-                return Application.dataPath + "/Resources/Effect/Videos/" + name;
-            case "PRO":
-                return Application.dataPath + "/Resources/Product/Videos/" + name;
-            case "BGI":
-                return Application.dataPath + "/Resources/Background/Images/" + name;
-            default:
-                return "[VideoResourceAPI.FillVideoPath] Error: Video Name Error";
-        }
+        return "[VideoResourceAPI.searchFile] Error: Directory Don't Exist!";
     }
 }
     
