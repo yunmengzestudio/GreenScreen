@@ -83,7 +83,7 @@ public class InternetTest : MonoBehaviour
             token=token.Substring(1, token.Length-1);
             Debug.Log("token=" + token);
             yield return StartCoroutine(IenumUpVidio(token));
-            //
+            // 
             complteUp?.Invoke(this,null);
         }
 
@@ -137,7 +137,7 @@ public class InternetTest : MonoBehaviour
         {
             Debug.Log(webRequest.downloadHandler.data.ToString());
             Base64ToImg(Picture, webRequest.downloadHandler.data);
-            PicturePanel.SetActive(true);
+            if (PicturePanel!=null)PicturePanel.SetActive(true);
         }
     }
     public void Base64ToImg(Image imgComponent,byte[] recordBase64String)
