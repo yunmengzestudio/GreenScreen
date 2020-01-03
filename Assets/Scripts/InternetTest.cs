@@ -117,7 +117,7 @@ public class InternetTest : MonoBehaviour
     {
         StartCoroutine(Post(saveKey,Picture));
     }
-    public void GetQRcode(string fileName)
+    public void GetQRcode(string fileName,Image Picture)
     {
         StartCoroutine(Post(fileName, Picture));
     }
