@@ -48,9 +48,8 @@ public class CarouselManager : MonoBehaviour
     }
 
     private void Start() {
-        // 隐藏二维码 并 绑定图片到二维码加载类
+        // 隐藏二维码
         HideQRCode();
-        InternetTest.Instance.Picture = QRCodeImage;
 
         videoManager = GetComponentInChildren<VideoManager>();
         LoadImages();
@@ -238,7 +237,7 @@ public class CarouselManager : MonoBehaviour
 
         // 加载二维码
         string videoName = images[currentIndex].name;
-        InternetTest.Instance.GetQRcode(videoName);
+        InternetTest.Instance.GetQRcode(videoName, QRCodeImage);
     }
 
     #endregion
