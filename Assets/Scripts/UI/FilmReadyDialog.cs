@@ -41,7 +41,14 @@ public class FilmReadyDialog : MonoBehaviour
     }
     
 
+    // 取消上传
     public void Cancel() {
+        Close();
+        ResAPI.Delete(ResAPI.VideoType.Product, videoName);
+    }
+
+    // 隐藏界面
+    public void Close() {
         QRCode.Hide();
         Loading.Hide();
         GetComponent<AutoHide>().Hide();

@@ -167,7 +167,7 @@ public class CarouselManager : MonoBehaviour
     // 加载 ResourcePath 下的缩略图 name
     private List<string> LoadImageNames() {
         List<string> newNames = new List<string>();
-        string fullPath = Path.Combine(Application.dataPath, "Resources", VideoPath);
+        string fullPath = Path.Combine(Application.streamingAssetsPath, "Resources", VideoPath);
 
         // 生成 newNames:List 当前文件夹下所有 FileSuffix 后缀的文件名
         if (Directory.Exists(fullPath)) {
@@ -193,7 +193,7 @@ public class CarouselManager : MonoBehaviour
         if (sprite == null) {
             GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
                 ResAPI.Instance.FillVideoPath(imageName),
-                Path.Combine(Application.dataPath, "Resources", ThumbPath) + "/"
+                Path.Combine(Application.streamingAssetsPath, "Resources", ThumbPath) + "/"
                 );
             StartCoroutine(ReloadEmptySprite());
         }

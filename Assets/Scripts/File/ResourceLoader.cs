@@ -8,7 +8,7 @@ public class ResourceLoader : MonoBehaviour
     /// <summary>
     ///     Resourcrs/ 目录的绝对位置（Windows）
     /// </summary>
-    public static readonly string ResourcePath = Path.Combine(Application.dataPath, "Resources");
+    public static readonly string ResourcePath = Path.Combine(Application.streamingAssetsPath, "Resources");
 
 
     /// <summary>

@@ -13,7 +13,7 @@ public class InitFolders : MonoBehaviour
     }
 
     public void Init() {
-        string resourcePath = Path.Combine(Application.dataPath, "Resources");
+        string resourcePath = Path.Combine(Application.streamingAssetsPath, "Resources");
         string[] paths = new string[] {
             resourcePath,
             Path.Combine(resourcePath, "Background"),

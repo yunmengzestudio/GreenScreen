@@ -24,10 +24,10 @@ public class ResAPI
         ".png", ".jpg"
     };
     private string[] FolderPaths = new string[] {
-        Application.dataPath + "/Resources/Background/Videos/" ,
-        Application.dataPath + "/Resources/Effect/Videos/",
-        Application.dataPath + "/Resources/Product/Videos/",
-        Application.dataPath + "/Resources/Background/Images/"
+        Application.streamingAssetsPath + "/Resources/Background/Videos/" ,
+        Application.streamingAssetsPath + "/Resources/Effect/Videos/",
+        Application.streamingAssetsPath + "/Resources/Product/Videos/",
+        Application.streamingAssetsPath + "/Resources/Background/Images/"
     };
 
 
@@ -126,13 +126,13 @@ public class ResAPI
         dialog.maxFile = dialog.file.Length;
         dialog.fileTitle = new string(new char[64]);
         dialog.maxFileTitle = dialog.fileTitle.Length;
-        dialog.initialDir = Application.dataPath;  //默认路径
+        dialog.initialDir = Application.streamingAssetsPath;  //默认路径
         dialog.title = "Open File Dialog";
         dialog.defExt = "png";  //显示文件的类型
         dialog.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;  //OFN_EXPLORER|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST| OFN_ALLOWMULTISELECT|OFN_NOCHANGEDIR
 
         if (DialogShow.GetOpenFileName(dialog)) {
-            string destDir = Path.Combine(Application.dataPath, "Resources", outDir, "Images/");
+            string destDir = Path.Combine(Application.streamingAssetsPath, "Resources", outDir, "Images/");
             string name = prefix + "_" + dialog.fileTitle /*+ ".png"*/;
             string fullPath = Path.Combine(destDir, name);
             File.Copy(dialog.file, fullPath, true);
@@ -156,7 +156,7 @@ public class ResAPI
 
         dialog.maxFileTitle = dialog.fileTitle.Length;
 
-        dialog.initialDir = UnityEngine.Application.dataPath;  //默认路径
+        dialog.initialDir = UnityEngine.Application.streamingAssetsPath;  //默认路径
 
         dialog.title = "Open File Dialog";
 
@@ -165,14 +165,14 @@ public class ResAPI
         dialog.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;  //OFN_EXPLORER|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST| OFN_ALLOWMULTISELECT|OFN_NOCHANGEDIR
 
         if (DialogShow.GetOpenFileName(dialog)) {
-            string destDir = Application.dataPath + "/Resources/" + outDir + "/Videos/";
+            string destDir = Application.streamingAssetsPath + "/Resources/" + outDir + "/Videos/";
             string videoName = prefix + "_" + dialog.fileTitle;
             File.Copy(dialog.file, destDir + videoName, true);
             Debug.Log("复制成功：" + destDir + videoName);
 
             GameObject.Find("GetImage").GetComponent<GetImage>().GeneratePreviewImage(
                 ResAPI.Instance.FillVideoPath(videoName),
-                Application.dataPath + "/Resources/" + outDir + "/Thumbnails/"
+                Application.streamingAssetsPath + "/Resources/" + outDir + "/Thumbnails/"
                 );
         }
     }
@@ -180,7 +180,7 @@ public class ResAPI
 
     // videoType: Resource 下的目录（包含 Videos/ 和 Thumbnails/）
     public static void Delete(VideoType type, string name) {
-        string dir = Path.Combine(Application.dataPath, "Resources", TypeToDir(type));
+        string dir = Path.Combine(Application.streamingAssetsPath, "Resources", TypeToDir(type));
         List<string> paths = new List<string>();
 
         if (TypeIsVideo(type)) {

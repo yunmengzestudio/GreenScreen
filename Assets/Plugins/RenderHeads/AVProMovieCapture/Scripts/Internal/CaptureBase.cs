@@ -100,6 +100,7 @@ namespace RenderHeads.Media.AVProMovieCapture
 			RelativeToProject,
 			RelativeToPeristentData,
 			Absolute,
+            Streaming,
 		}
 
 		public enum OutputExtension
@@ -676,7 +677,11 @@ namespace RenderHeads.Media.AVProMovieCapture
 			{
 				fileFolder = path;
 			}
-			return fileFolder;
+            else if (outputPathType == OutputPath.Streaming) {
+                fileFolder = Path.Combine(Application.streamingAssetsPath, path);
+            }
+
+                return fileFolder;
 		}
 
 		private static string AutoGenerateFilename(OutputPath outputPathType, string path, string filename)

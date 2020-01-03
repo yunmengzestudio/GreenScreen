@@ -29,7 +29,7 @@ public class SelectPanel : MonoBehaviour
 
     public void UpdateAll() {
         List<string> newNames = new List<string>();
-        string fullPath = Path.Combine(Application.dataPath, "Resources", ResourcePath);
+        string fullPath = Path.Combine(Application.streamingAssetsPath, "Resources", ResourcePath);
 
         // 生成 newNames:List 当前文件夹下所有 FileSuffix 后缀的文件名
         if (Directory.Exists(fullPath)) {
