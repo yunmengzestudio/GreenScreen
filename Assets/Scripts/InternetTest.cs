@@ -103,19 +103,19 @@ public class InternetTest : MonoBehaviour
         Debug.Log("localFile=" + localFile);
         // 上传策略，参见 
         UploadManager um = new UploadManager();
-        LoadingText.SetActive(true);
+        LoadingText?.SetActive(true);
         HttpResult result = um.UploadFile(localFile, saveKey, token);
         Debug.Log(result);
         saveKey = saveKey.Substring(0, saveKey.Length - 4);
         Debug.Log("fileName" + saveKey);
-        LoadingText.SetActive(false);
+        LoadingText?.SetActive(false);
 
         //结束遮罩
 
     }
     public void TestPost()
     {
-        StartCoroutine(Post(saveKey,Picture));
+        if (Picture!=null)StartCoroutine(Post(saveKey,Picture));
     }
     public void GetQRcode(string fileName,Image Picture)
     {
