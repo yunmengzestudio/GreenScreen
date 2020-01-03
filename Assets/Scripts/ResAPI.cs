@@ -184,12 +184,12 @@ public class ResAPI
         List<string> paths = new List<string>();
 
         if (TypeIsVideo(type)) {
-            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png");
-            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png.meta");
             foreach (string suf in VideoSuffix) {
                 paths.Add(Path.Combine(dir, "Videos", name) + suf);
                 paths.Add(Path.Combine(dir, "Videos", name) + suf + ".meta");
             }
+            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png");
+            paths.Add(Path.Combine(dir, "Thumbnails", name) + ".png.meta");
         }
         else {
             foreach (string suf in ImageSuffix) {
@@ -222,7 +222,7 @@ public class ResAPI
     ///     根据 path (路径 + 文件名) 补全后缀
     /// </summary>
     public static string FillSuffix(string path) {
-        Regex reg = new Regex(@"(.*)[\\/]([\w ]+)$");
+        Regex reg = new Regex(@"(.*)[\\/](.+)$");
         GroupCollection res = reg.Match(path).Groups;
         return searchFile(res[1].Value, res[2].Value);
     }

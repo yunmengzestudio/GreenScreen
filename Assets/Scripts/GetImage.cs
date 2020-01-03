@@ -17,9 +17,12 @@ public class GetImage : MonoBehaviour
     public event EventHandler Completed;
 
 
+    private void Awake() {
+        vp = GetComponent<VideoPlayer>();
+    }
+
     void Start() {
         videoFrameTexture = new Texture2D(2, 2);
-        vp = GetComponent<VideoPlayer>();
         vp.waitForFirstFrame = true;
         vp.sendFrameReadyEvents = true;
         vp.frameReady += OnNewFrame;
@@ -87,10 +90,10 @@ public class GetImage : MonoBehaviour
         vp.Prepare();
     }
 
-    public void GenerateVideoPreviewImage()
-    {
-        string videopath = CaptureBase.LastFileSaved;
-        string outimagepath = "Assets/Resources/Product/Thumbnails";
-        GeneratePreviewImage(videopath, outimagepath);
-    }
+    //public void GenerateVideoPreviewImage()
+    //{
+    //    string videopath = CaptureBase.LastFileSaved;
+    //    string outimagepath = "Assets/Resources/Product/Thumbnails";
+    //    GeneratePreviewImage(videopath, outimagepath);
+    //}
 }

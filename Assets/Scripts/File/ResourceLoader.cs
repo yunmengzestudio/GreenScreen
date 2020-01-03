@@ -27,6 +27,8 @@ public class ResourceLoader : MonoBehaviour
         }
 
         Texture2D texture = LoadTexture(path);
+        if (texture == null)
+            return null;
 
         // 创建 Sprite
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));

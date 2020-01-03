@@ -119,6 +119,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1715700218}
     m_Modifications:
+    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_Name
+      value: Effect_VideoPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6597443827902059247, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -224,15 +234,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
-      propertyPath: m_Name
-      value: Effect_VideoPlayer
+      propertyPath: m_RenderMode
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_TargetCamera
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
@@ -253,16 +263,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_TargetCamera
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b13be2c5cafced4d8cc07d145c68d2d, type: 3}
@@ -596,7 +596,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -759.9, y: -251.1}
-  m_SizeDelta: {x: 54.5, y: 50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &202494696
 MonoBehaviour:
@@ -682,8 +682,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 9f3fe5aee49ffcf45b0b8cdc8afe1707, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1155,6 +1155,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1715700218}
     m_Modifications:
+    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_Name
+      value: BG_VideoPlayer
+      objectReference: {fileID: 0}
     - target: {fileID: 6597443827902059247, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1260,10 +1265,20 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059246, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
-      propertyPath: m_Name
-      value: BG_VideoPlayer
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_TargetCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
+        type: 3}
+      propertyPath: m_AudioOutputMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6597443827902059236, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
         type: 3}
@@ -1290,21 +1305,6 @@ PrefabInstance:
       propertyPath: SelectPanels.Array.data[1]
       value: 
       objectReference: {fileID: 437486120}
-    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_TargetCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597443827902059232, guid: 8b13be2c5cafced4d8cc07d145c68d2d,
-        type: 3}
-      propertyPath: m_AudioOutputMode
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b13be2c5cafced4d8cc07d145c68d2d, type: 3}
 --- !u!224 &451237063 stripped
@@ -1970,7 +1970,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -833, y: -251.1}
-  m_SizeDelta: {x: 56.2, y: 50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &908759920
 MonoBehaviour:
@@ -2045,8 +2045,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 06651342c38834e4e9db2134d566a069, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2198,6 +2198,11 @@ PrefabInstance:
       propertyPath: ResourcePath
       value: Effect/Thumbnails/
       objectReference: {fileID: 0}
+    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000021254013
+      objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_Color.a
@@ -2217,11 +2222,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.7505785
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000036979272
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
@@ -2843,6 +2843,26 @@ PrefabInstance:
       propertyPath: ResourcePath
       value: Background/Thumbnails/
       objectReference: {fileID: 0}
+    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000021254013
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_Color.a
@@ -2862,26 +2882,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000036979272
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
@@ -3296,7 +3296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3494,6 +3494,26 @@ PrefabInstance:
       propertyPath: ResourcePath
       value: Background/Images/
       objectReference: {fileID: 0}
+    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000021254013
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1608565747168832549, guid: 89506d2ac48b88f44b72c5b3b8156929,
         type: 3}
       propertyPath: m_Color.a
@@ -3513,26 +3533,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527699633841127, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000036979272
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 891527701072340382, guid: 89506d2ac48b88f44b72c5b3b8156929,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89506d2ac48b88f44b72c5b3b8156929, type: 3}
@@ -3984,7 +3984,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u25B6"
+  m_Text: 
 --- !u!222 &1831167818
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4063,7 +4063,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u25A0"
+  m_Text: 
 --- !u!222 &1841331856
 CanvasRenderer:
   m_ObjectHideFlags: 0

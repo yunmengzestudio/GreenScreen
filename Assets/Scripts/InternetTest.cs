@@ -54,8 +54,8 @@ public class InternetTest : MonoBehaviour
     }*/
     public void TestGet()
     {
-        Debug.Log("FilePath=" + CaptureBase.LastFileSaved);
-        _filePath = CaptureBase.LastFileSaved;
+        Debug.Log("FilePath=" + GameObject.FindObjectOfType<CaptureBase>().LastFilePath);
+        _filePath = GameObject.FindObjectOfType<CaptureBase>().LastFilePath;
 
         StartCoroutine(Get());
     }
