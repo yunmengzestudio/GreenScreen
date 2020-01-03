@@ -115,13 +115,13 @@ public class InternetTest : MonoBehaviour
     }
     public void TestPost()
     {
-        StartCoroutine(Post(saveKey));
+        StartCoroutine(Post(saveKey,Picture));
     }
     public void GetQRcode(string fileName)
     {
-        StartCoroutine(Post(fileName));
+        StartCoroutine(Post(fileName, Picture));
     }
-    IEnumerator Post(string fileName)
+    IEnumerator Post(string fileName,Image Picture)
     {
         WWWForm form = new WWWForm();
         //键值对
