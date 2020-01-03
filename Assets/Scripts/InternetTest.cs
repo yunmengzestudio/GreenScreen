@@ -11,6 +11,7 @@ using System;
 using RenderHeads.Media.AVProMovieCapture;
 public class InternetTest : MonoBehaviour
 {
+    public event EventHandler complteUp;
     public GameObject LoadingText;
     public GameObject PicturePanel;
     public string saveKey;
@@ -36,6 +37,7 @@ public class InternetTest : MonoBehaviour
     }
     private void Update()
     {
+        
        
         //Shift();
     }/*
@@ -61,6 +63,7 @@ public class InternetTest : MonoBehaviour
     }
     IEnumerator Get()
     {
+
         UnityWebRequest webRequest = UnityWebRequest.Get("http://lmsc.dominikyang.vip:8080/lmscfw/service/upload");
         //webRequest.timeout = 10;
         yield return webRequest.SendWebRequest();
@@ -79,7 +82,9 @@ public class InternetTest : MonoBehaviour
             //Debug.Log("token=" + token);
             token=token.Substring(1, token.Length-1);
             Debug.Log("token=" + token);
-            UpVidio(token);
+            yield return StartCoroutine(IenumUpVidio(token));
+            //
+            complteUp?.Invoke(this,null);
         }
 
     }
